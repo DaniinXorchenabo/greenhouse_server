@@ -1,17 +1,88 @@
-version: "3.9"
-
-services:
+#version: "3.9"
+#
+#services:
 #  db:
 #    image: postgres:13.4-alpine
+#    restart: always
+#    ports:
+#      - 5432:5432
+#    environment:
+#      POSTGRES_PASSWORD: 'postgres'
+#    environment_file:
+#      - .env
+#    volumes:
+#      - greenhouse_server_database:/var/lib/postgresql/data
+#
+#  web:
+#    build: app
+#
+#    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+#    network_mode: host
+#    links:
+#      - db
+#
+#    ports:
+#      - 8040:8000
+#    expose:
+#      - 8040
+#    volumes:
+#      - type: bind
+#        source: ./app
+#        target: /app
+#
+#volumes:
+#  greenhouse_server_database:
+#    driver: local
+
+version: "3.9"
+services:
+  db:
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_USER: ${PG_SUPERUSER_NAME}
+      POSTGRES_PASSWORD: ${PG_SUPERUSER_PASSWORD}
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - postrges-db-data:/var/lib/postgresql/data
+    ports:
+      - ${PGPORT}:5432
+    expose:
+      - ${PGPORT}
+
 
   web:
     build: app
 
-    command: uvicorn main:app --reload --host 0.0.0.0 --port 8040
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+#    network_mode: host
+    links:
+      - db
+
     ports:
-      - 8040:8040
+      - "8040:8000"
+    expose:
+      - 8040
     volumes:
       - type: bind
         source: ./app
         target: /app
+
+  pgadmin:
+    image: dpage/pgadmin4:5.7
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    links:
+      - "db:pgsql-server"
+volumes:
+  postrges-db-data:
+  pgadmin-data:
 
