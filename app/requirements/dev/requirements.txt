@@ -1,2 +1,5 @@
 fastapi[all]
 uvicorn[standard]
+jinja2
+piccolo[postgres]
+piccolo_admin
