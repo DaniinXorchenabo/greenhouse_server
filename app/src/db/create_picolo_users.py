@@ -13,9 +13,23 @@ if os.environ.get("PG_SUPERUSER_NAME") is None:
 
 from piccolo.apps.user.tables import BaseUser
 
-BaseUser(username="test",
-         password="123",
-         email="example@mail.com",
+BaseUser(username=os.environ.pop("PICOLO_SUPERUSER_LOGIN"),
+         password=os.environ.pop("PICOLO_SUPERUSER_PASSWORD"),
+         email=os.environ.pop("PICOLO_SUPERUSER_EMAIL"),
          active=True,
          admin=True,
          superuser=True).save().run_sync()
+
+BaseUser(username=os.environ.pop("PICOLO_ADMIN_LOGIN"),
+         password=os.environ.pop("PICOLO_ADMIN_PASSWORD"),
+         email=os.environ.pop("PICOLO_ADMIN_EMAIL"),
+         active=True,
+         admin=True,
+         superuser=False).save().run_sync()
+
+BaseUser(username=os.environ.pop("PICOLO_USER_LOGIN"),
+         password=os.environ.pop("PICOLO_USER_PASSWORD"),
+         email=os.environ.pop("PICOLO_USER_EMAIL"),
+         active=True,
+         admin=False,
+         superuser=False).save().run_sync()
