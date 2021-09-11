@@ -2,6 +2,6 @@ from piccolo.table import Table
 from piccolo.columns import Varchar, Boolean
 
 
-class User(Table):
+class MyUser(Table):
     name = Varchar()
 

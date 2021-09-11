@@ -10,7 +10,7 @@ def init_app_func(app):
     Добавление всего того, что можно добавить только к FastApi()
     и нельзя добавить к ApiRouter()"""
 
-    # add_routers_func(app)
+    add_routers_func(app)
 
     @app.on_event("startup")
     async def open_database_connection_pool():
