@@ -35,6 +35,20 @@
 #    driver: local
 
 version: "3.9"
+
+networks:
+  local_db:
+    driver: bridge
+    name: global_access
+    ipam:
+      driver: default
+  web_app:
+    driver: bridge
+    name: access_to_db
+    ipam:
+      driver: default
+
+
 services:
   db:
     image: postgres:13-alpine
@@ -45,7 +59,9 @@ services:
       POSTGRES_PASSWORD: ${PG_SUPERUSER_PASSWORD}
       PGDATA: /var/lib/postgresql/data
     volumes:
-      - postrges-db-data:/var/lib/postgresql/data
+      - postrges-db-data-t1:/var/lib/postgresql/data
+    networks:
+      - local_db
     ports:
       - ${PGPORT}:5432
     expose:
@@ -53,36 +69,66 @@ services:
 
 
   web:
-    build: app
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+      cache_from:
+        - python
+    image: daniinxorchenabo/gh_server
 
-    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
-#    network_mode: host
+    networks:
+      - local_db
+      - web_app
+    env_file:
+      - .env
+    environment:
+      PGHOST: host.docker.internal
+    depends_on:
+      - db
+# && piccolo migrations forwards gh
+
+    command: >
+      bash -c "cd ./code/gh_server/app/src/db
+      && echo "--------------------------------------------------"
+      && ls
+      && echo "--------------------------------------------------"
+      && sleep 5
+      && piccolo --diagnose
+      && piccolo migrations forwards gh
+      && cd ../..
+      && uvicorn main:app --reload --host 0.0.0.0 --port 8000"
+
     links:
       - db
+      - db:${PG_SUPERUSER_NAME}
+      - db:${PGHOST}
 
     ports:
       - "8040:8000"
-    expose:
-      - 8040
     volumes:
       - type: bind
-        source: ./app
-        target: /app
+        source: .
+        target: /code/gh_server
 
   pgadmin:
     image: dpage/pgadmin4:5.7
+    depends_on:
+      - db
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
       PGADMIN_LISTEN_PORT: 80
+    networks:
+      - local_db
+      - web_app
     ports:
       - "8080:80"
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - pgadmin-data-t1:/var/lib/pgadmin
     links:
       - "db:pgsql-server"
 volumes:
-  postrges-db-data:
-  pgadmin-data:
+  postrges-db-data-t1:
+  pgadmin-data-t1:
 

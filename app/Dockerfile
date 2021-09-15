@@ -1,9 +1,10 @@
 FROM python:3.9.6-slim AS builder
-RUN mkdir ./app
 
 COPY ./requirements/dev/requirements.txt ./requirements.txt
 RUN pip install -r ./requirements.txt --no-cache-dir
-WORKDIR ./app
+#RUN mkdir ./app/
+#COPY .env .env
+#WORKDIR ./app
 
 #FROM python:3.9.6-alpine
 #COPY ./requirements/dev/requirements.txt ./requirements.txt
