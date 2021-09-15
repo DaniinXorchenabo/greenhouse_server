@@ -35,16 +35,20 @@ DB = PostgresEngine(
     }
 )
 print("***%%%%%-------------", os.environ.get("PG_SUPERUSER_NAME"), __name__)
+try:
 
-readonly_DB = PostgresEngine(
-    config={
-        "database": os.environ.get("PGDATABASE"),
-        "user": os.environ.get("PG_GUEST_NAME"),
-        "password": os.environ.get("PG_GUEST_PASSWORD"),
-        "host": os.environ.get("PGHOST"),
-        "port": os.environ.get("PGPORT"),
-    }
-)
+    readonly_DB = PostgresEngine(
+        config={
+            "database": os.environ.get("PGDATABASE"),
+            "user": os.environ.get("PG_GUEST_NAME"),
+            "password": os.environ.get("PG_GUEST_PASSWORD"),
+            "host": os.environ.get("PGHOST"),
+            "port": os.environ.get("PGPORT"),
+        }
+    )
+except Exception:
+    pass
+
 
 
 # import src.db.gh.piccolo_app
