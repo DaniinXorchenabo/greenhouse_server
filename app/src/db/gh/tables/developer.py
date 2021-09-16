@@ -3,7 +3,7 @@ from enum import Enum
 from piccolo.table import Table
 from piccolo.columns import Varchar, Boolean, Array, UUID
 
-from src.db.piccolo_conf import DB
+from src.db.piccolo_conf import developer_engine
 
 
 class Scopes(str, Enum):
@@ -13,7 +13,7 @@ class Scopes(str, Enum):
     dev = 'd'
 
 
-class User(Table, tablename="base_user", db=DB):
+class User(Table, tablename="base_user", db=developer_engine):
 
     id = UUID(primary_key=True, required=True, unique=True)
     name = Varchar(required=True)

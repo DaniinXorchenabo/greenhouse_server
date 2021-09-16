@@ -1,5 +1,7 @@
 import os
 from os.path import dirname,  join, split
+
+
 if os.environ.get("PG_SUPERUSER_NAME") is None:
     from dotenv import load_dotenv
 
@@ -16,9 +18,6 @@ if os.environ.get("PG_SUPERUSER_NAME") is None:
         print("В корне проекта обязательно должен быть файл .env!!!!")
         raise FileNotFoundError("\n.env file must be in project root\n")
 
-
-# project_dir = split(split(dirname(__file__))[0])[0]
-# os.chdir(project_dir)
 
 from piccolo.engine.postgres import PostgresEngine
 
@@ -37,7 +36,7 @@ DB = PostgresEngine(
 print("***%%%%%-------------", os.environ.get("PG_SUPERUSER_NAME"), __name__)
 try:
 
-    readonly_DB = PostgresEngine(
+    guest_engine = PostgresEngine(
         config={
             "database": os.environ.get("PGDATABASE"),
             "user": os.environ.get("PG_GUEST_NAME"),
@@ -46,19 +45,45 @@ try:
             "port": os.environ.get("PGPORT"),
         }
     )
+    user_engine = PostgresEngine(
+        config={
+            "database": os.environ.get("PGDATABASE"),
+            "user": os.environ.get("PG_USER_NAME"),
+            "password": os.environ.get("PG_USER_PASSWORD"),
+            "host": os.environ.get("PGHOST"),
+            "port": os.environ.get("PGPORT"),
+        }
+    )
+    admin_engine = PostgresEngine(
+        config={
+            "database": os.environ.get("PGDATABASE"),
+            "user": os.environ.get("PG_ADMIN_NAME"),
+            "password": os.environ.get("PG_ADMIN_PASSWORD"),
+            "host": os.environ.get("PGHOST"),
+            "port": os.environ.get("PGPORT"),
+        }
+    )
+    developer_engine = PostgresEngine(
+        config={
+            "database": os.environ.get("PGDATABASE"),
+            "user": os.environ.get("PG_DEVELOPER_NAME"),
+            "password": os.environ.get("PG_DEVELOPER_NAME"),
+            "host": os.environ.get("PGHOST"),
+            "port": os.environ.get("PGPORT"),
+        }
+    )
+    system_engine = PostgresEngine(
+        config={
+            "database": os.environ.get("PGDATABASE"),
+            "user": os.environ.get("PG_EDIT_DB_STRUCTURE_NAME"),
+            "password": os.environ.get("PG_EDIT_DB_STRUCTURE_PASSWORD"),
+            "host": os.environ.get("PGHOST"),
+            "port": os.environ.get("PGPORT"),
+        }
+    )
 except Exception:
-    pass
+    guest_engine = user_engine = admin_engine = developer_engine = system_engine = None
 
-
-
-# import src.db.gh.piccolo_app
-# piccolo_conf = os.environ.pop("PICCOLO_CONF", None)
-# APP_REGISTRY = AppRegistry(
-#     apps=[
-#         "gh.piccolo_app",
-#         "piccolo_admin.piccolo_app"
-#     ]
-# )
 try:
     print("!!!!!!!!!!!_-_---------------------------")
     APP_REGISTRY = AppRegistry(
