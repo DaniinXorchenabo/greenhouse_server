@@ -1,10 +1,7 @@
 from enum import Enum
 
+from piccolo.columns import Varchar, Array, UUID
 from piccolo.table import Table
-from piccolo.columns import Varchar, Boolean, Array, UUID
-
-from src.db.piccolo_conf import DB
-
 
 class Scopes(str, Enum):
     guest = 'g'
@@ -13,7 +10,7 @@ class Scopes(str, Enum):
     dev = 'd'
 
 
-class User(Table, tablename="base_user", db=DB):
+class User(Table, tablename="base_user"):
 
     id = UUID(primary_key=True, required=True, unique=True)
     name = Varchar(required=True)
