@@ -1,7 +1,7 @@
 from enum import Enum
 
+from piccolo.columns import Varchar
 from piccolo.table import Table
-from piccolo.columns import Varchar, Boolean, Array, UUID
 
 from src.db.piccolo_conf import guest_engine
 

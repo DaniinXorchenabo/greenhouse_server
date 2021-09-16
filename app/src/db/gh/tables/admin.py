@@ -1,10 +1,9 @@
 from enum import Enum
 
+from piccolo.columns import Varchar, UUID
 from piccolo.table import Table
-from piccolo.columns import Varchar, Boolean, Array, UUID
 
 from src.db.piccolo_conf import admin_engine
-
 
 
 class Scopes(str, Enum):
