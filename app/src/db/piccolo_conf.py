@@ -67,7 +67,7 @@ try:
         config={
             "database": os.environ.get("PGDATABASE"),
             "user": os.environ.get("PG_DEVELOPER_NAME"),
-            "password": os.environ.get("PG_DEVELOPER_NAME"),
+            "password": os.environ.get("PG_DEVELOPER_PASSWORD"),
             "host": os.environ.get("PGHOST"),
             "port": os.environ.get("PGPORT"),
         }
