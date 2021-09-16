@@ -7,7 +7,6 @@ from src.api.add_routers import add_routers_func
 from src.db.piccolo_conf import readonly_DB
 
 
-
 def init_app_func(app: FastAPI):
     """Добавление событий, обработчиков исключений
 
