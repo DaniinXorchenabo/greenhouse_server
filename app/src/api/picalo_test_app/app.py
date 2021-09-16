@@ -1,17 +1,6 @@
-import typing as t
-from os.path import dirname, join
+from fastapi import APIRouter
 
-from piccolo_admin.endpoints import create_admin
-from piccolo_api.crud.serializers import create_pydantic_model
-from piccolo.engine import engine_finder
-from starlette.routing import Route, Mount
-from fastapi import FastAPI, APIRouter
-from fastapi.responses import JSONResponse
-from starlette.staticfiles import StaticFiles
-
-from src.api.picalo_test_app.endpoints import HomeEndpoint
-from src.db.gh.piccolo_app import APP_CONFIG
-from src.db.gh.tables.readonly import MyUser
+from src.db.gh.tables.guest import User
 # from src.db.gh.tables.superuser import Task
 
 
@@ -27,12 +16,12 @@ async def tasks():
 
 @app.get("/test_get")
 async def test_db():
-    return await MyUser.select().run()
+    return await User.select().run()
 
 
 @app.get("/test_create")
 async def test_db():
-    return await MyUser(name="Dfff").save().run()
+    return await User(name="Dfff").save().run()
 
 # TaskModelIn: t.Any = create_pydantic_model(table=Task, model_name="TaskModelIn")
 # TaskModelOut: t.Any = create_pydantic_model(
