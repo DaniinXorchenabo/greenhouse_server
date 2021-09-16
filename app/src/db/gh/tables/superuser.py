@@ -1,7 +1,28 @@
+from enum import Enum
+
 from piccolo.table import Table
-from piccolo.columns import Varchar, Boolean
+from piccolo.columns import Varchar, Boolean, Array, UUID
 
 
-class MyUser(Table):
-    name = Varchar()
+class Scopes(str, Enum):
+    guest = 'g'
+    user = 'u'
+    admin = 'a'
+    dev = 'd'
+
+
+class User(Table, tablename="base_user"):
+
+    id = UUID(primary_key=True, required=True, unique=True)
+    name = Varchar(required=True)
+    surname = Varchar(required=True)
+    username = Varchar(required=True, unique=True, help_text="Логин пользователя")
+    pass_hash = Varchar(required=True, length=4096, help_text="хэш пароля")
+    email = Varchar(unique=True)
+    scopes = Array(base_column=Varchar(1, choices=Scopes, default=Scopes.guest),
+                   required=True,
+                   default=[],
+                   help_text="Разрешения для пользователя, приписанные нотацией OAuth2")
+
+
 
