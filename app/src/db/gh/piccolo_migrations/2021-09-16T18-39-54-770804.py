@@ -3,7 +3,6 @@ import os
 from piccolo.apps.migrations.auto import MigrationManager
 from piccolo.table import Table
 
-
 ID = "2021-09-16T18:39:54:770804"
 VERSION = "0.45.1"
 DESCRIPTION = "Обновление доступа для ролей"

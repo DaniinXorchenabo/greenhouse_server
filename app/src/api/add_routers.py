@@ -1,14 +1,8 @@
-from fastapi import APIRouter, FastAPI
-
-import typing as t
-from os.path import dirname, join, split
+from os.path import dirname, join
 
 from piccolo_admin.endpoints import create_admin
-from piccolo_api.crud.serializers import create_pydantic_model
-from piccolo.engine import engine_finder
 from starlette.routing import Route, Mount
-from fastapi import FastAPI, APIRouter
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI
 from starlette.staticfiles import StaticFiles
 
 from src.api.picalo_test_app.endpoints import HomeEndpoint
@@ -16,6 +10,19 @@ from src.db.gh.piccolo_app import APP_CONFIG
 # from src.db.gh.tables.superuser import Task
 
 from src.api.picalo_test_app.app import app as picolo_app
+from os.path import dirname, join
+
+from fastapi import FastAPI
+from piccolo_admin.endpoints import create_admin
+from starlette.routing import Route, Mount
+from starlette.staticfiles import StaticFiles
+
+from src.api.picalo_test_app.app import app as picolo_app
+from src.api.picalo_test_app.endpoints import HomeEndpoint
+from src.db.gh.piccolo_app import APP_CONFIG
+
+
+# from src.db.gh.tables.superuser import Task
 
 
 def add_routers_func(app: FastAPI):

@@ -1,11 +1,11 @@
-from piccolo.apps.migrations.auto import MigrationManager
 from enum import Enum
+
+from piccolo.apps.migrations.auto import MigrationManager
 from piccolo.columns.column_types import Array
 from piccolo.columns.column_types import UUID
 from piccolo.columns.column_types import Varchar
 from piccolo.columns.defaults.uuid import UUID4
 from piccolo.columns.indexes import IndexMethod
-
 
 ID = "2021-09-16T15:34:27:890907"
 VERSION = "0.45.1"

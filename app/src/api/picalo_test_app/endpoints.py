@@ -4,7 +4,6 @@ import jinja2
 from starlette.endpoints import HTTPEndpoint
 from starlette.responses import HTMLResponse
 
-
 ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(
         searchpath=os.path.join(os.path.dirname(__file__), "templates")

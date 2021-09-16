@@ -1,8 +1,7 @@
 import os
 
-from piccolo.table import Table
 from piccolo.apps.migrations.auto import MigrationManager
-from itertools import chain
+from piccolo.table import Table
 
 ID = "2021-09-15T18:53:10:746304"
 VERSION = "0.45.1"

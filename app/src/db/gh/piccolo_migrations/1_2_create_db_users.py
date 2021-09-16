@@ -1,7 +1,7 @@
 import os
 
-from piccolo.table import Table
 from piccolo.apps.migrations.auto import MigrationManager
+from piccolo.table import Table
 
 ID = "2021-09-12T00:13:57:182359"
 VERSION = "0.45.1"
