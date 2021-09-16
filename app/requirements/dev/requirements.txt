@@ -3,5 +3,5 @@ python-dotenv
 fastapi[all]
 uvicorn[standard]
 jinja2
-piccolo[postgres]
+piccolo[all]
 piccolo_admin

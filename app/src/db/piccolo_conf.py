@@ -30,7 +30,7 @@ DB = PostgresEngine(
         "database": os.environ.get("PGDATABASE"),
         "user": os.environ.get("PG_SUPERUSER_NAME"),
         "password": os.environ.get("PG_SUPERUSER_PASSWORD"),
-        "host": "host.docker.internal", # os.environ.get("PGHOST"),
+        "host": os.environ.get("PGHOST"),
         "port": os.environ.get("PGPORT"),
     }
 )
