@@ -16,6 +16,7 @@ networks:
 services:
   db:
     image: postgres:13-alpine
+    command: postgres -c max_connections=300 -c shared_buffers=80MB
     restart: always
     environment:
       POSTGRES_DB: ${PGDATABASE}
