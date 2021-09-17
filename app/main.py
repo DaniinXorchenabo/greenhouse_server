@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from os.path import dirname, join, split
 
+from src.db.gh.tables import tab
 
 if os.environ.get("PG_SUPERUSER_NAME") is None:
 
@@ -25,11 +26,18 @@ path = join(path, "app", "src", "db", "picolo_conf.env")
 if os.path.exists(path):
     load_dotenv(path)
 
+from typing import Any, Optional, Awaitable
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 import uvicorn
 from src.init_app import init_app_func
 import importlib
+from pydantic import BaseModel
+
+from src.db.piccolo_conf import system_engine, guest_engine
+from src.api.security.check_roles import admin
+from src.api.security.schemes import Tab
+
 app = FastAPI()
 
 
@@ -38,8 +46,15 @@ async def root():
     return {"message": "Hello World!!!!"}
 
 
-init_app_func(app)
+@app.get("/status1/")
+async def read_system_status(t: Tab = Depends(admin)):  # , scopes=['g', 'a']
+    print("функция запроса")
+    u2 = (await (u := tab.guest.User).objects().where(u.username == "Vasiliev_1").first().run())
+    print("конец системной транзакции")
+    return {"status": "ok", "u": t.u, "us": u2}
 
+
+init_app_func(app)
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

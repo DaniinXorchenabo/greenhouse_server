@@ -1,7 +1,10 @@
 wheel
 python-dotenv
 fastapi[all]
+python-multipart
+python-jose[cryptography]
+passlib[bcrypt]
 uvicorn[standard]
 jinja2
-piccolo[all]
+piccolo[postgres] >= 0.48.0
 piccolo_admin
