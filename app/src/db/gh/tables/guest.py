@@ -4,13 +4,7 @@ from piccolo.columns import Varchar
 from piccolo.table import Table
 
 from src.db.piccolo_conf import guest_engine
-
-
-class Scopes(str, Enum):
-    guest = 'g'
-    user = 'u'
-    admin = 'a'
-    dev = 'd'
+from src.utils.enums import Scopes
 
 
 class User(Table, tablename="base_user", db=guest_engine):
