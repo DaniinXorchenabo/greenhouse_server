@@ -46,7 +46,7 @@ services:
     env_file:
       - .env
     environment:
-      PGHOST: host.docker.internal
+      PGHOST: pgsql-server
     depends_on:
       - db
 
@@ -60,6 +60,7 @@ services:
 
     links:
       - db
+      - "db:pgsql-server"
 
     ports:
       - ${APP_PORT}:8000
