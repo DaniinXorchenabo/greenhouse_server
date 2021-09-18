@@ -93,6 +93,8 @@ Check it: /docs [http://localhost:8040/docs](http://localhost:8040/docs) (You ne
 
 ![image](https://user-images.githubusercontent.com/45897837/133885439-ac18f257-88c3-48c3-bfea-6cff1a8e4086.png)
 
+![image](https://user-images.githubusercontent.com/45897837/133885621-22e6f57a-e701-4bb9-9f8d-3b271edfe54d.png)
+
 It was genereted by fast-api framework, use openAPI standart
 
 Or, You can use /redoc [http://localhost:8040/redoc](http://localhost:8040/redoc)
