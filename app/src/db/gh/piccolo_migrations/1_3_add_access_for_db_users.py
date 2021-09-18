@@ -32,7 +32,7 @@ async def forwards():
         dev_settings = f"GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE my_user TO {os.environ.get('PG_DEVELOPER_NAME')};"
 
         create_tables = [f"GRANT USAGE, CREATE ON SCHEMA {schema} TO {os.environ.get(i)};" for i in
-                         ["PG_EDIT_DB_STRUCTURE_NAME", "PGUSER"]]
+                         ["PG_EDIT_DB_STRUCTURE_NAME", "PG_SUPERUSER_NAME"]]
         admin_users = f"ALTER DEFAULT PRIVILEGES IN SCHEMA {schema} GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO {os.environ.get('PG_EDIT_DB_STRUCTURE_NAME')};"
         superuser = f"GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA {schema} TO {os.environ.get('PG_SUPERUSER_NAME')}"
 
