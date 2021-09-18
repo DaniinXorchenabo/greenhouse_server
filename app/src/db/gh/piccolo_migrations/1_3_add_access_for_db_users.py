@@ -16,7 +16,7 @@ async def forwards():
     async def run():
         schema = 'public'
         roles = ["PG_GUEST_NAME", "PG_USER_NAME", "PG_ADMIN_NAME", "PG_DEVELOPER_NAME",
-                 "PG_EDIT_DB_STRUCTURE_NAME", "PGUSER"
+                 "PG_EDIT_DB_STRUCTURE_NAME", "PG_SUPERUSER_NAME"
                  ]
         connect_to_db = [f"GRANT CONNECT ON DATABASE {os.environ.get('PGDATABASE')} TO {os.environ.get(i)};"
                          for i in roles]
@@ -34,7 +34,7 @@ async def forwards():
         create_tables = [f"GRANT USAGE, CREATE ON SCHEMA {schema} TO {os.environ.get(i)};" for i in
                          ["PG_EDIT_DB_STRUCTURE_NAME", "PGUSER"]]
         admin_users = f"ALTER DEFAULT PRIVILEGES IN SCHEMA {schema} GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO {os.environ.get('PG_EDIT_DB_STRUCTURE_NAME')};"
-        superuser = f"GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA {schema} TO {os.environ.get('PGUSER')}"
+        superuser = f"GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA {schema} TO {os.environ.get('PG_SUPERUSER_NAME')}"
 
         # ALL TABLES
         # guest_option = f"GRANT SELECT ON my_user IN SCHEMA {schema} TO {os.environ.get('PG_GUEST_NAME')};"
