@@ -91,3 +91,7 @@ services:
 volumes:
   postrges-db-data-t1:
   pgadmin-data-t1:
+
+
+
+
