@@ -85,3 +85,23 @@ Check it: [http://localhost:8080/](http://localhost:8080/)
 `PgAdmin` help you administration the database
 
 You can learn more this: [https://linuxhint.com/postgresql_docker/](https://linuxhint.com/postgresql_docker/)
+
+
+## Documentation
+
+Check it: /docs [http://localhost:8040/docs](http://localhost:8040/docs) (You need in changeing 8040 to your port)
+
+![image](https://user-images.githubusercontent.com/45897837/133885439-ac18f257-88c3-48c3-bfea-6cff1a8e4086.png)
+
+It was genereted by fast-api framework, use openAPI standart
+
+Or, You can use /redoc [http://localhost:8040/redoc](http://localhost:8040/redoc)
+
+![image](https://user-images.githubusercontent.com/45897837/133885560-0fe2c0c3-19be-4493-99a2-d873bbc4104a.png)
+
+It was genereted by fast-api framework too
+
+
+
+
+
