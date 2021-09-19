@@ -56,14 +56,14 @@ services:
       && piccolo --diagnose
       && piccolo migrations forwards gh
       && cd ../..
-      && uvicorn main:app --reload --host 0.0.0.0 --port 8000"
+      && uvicorn main:app --reload --host 0.0.0.0 --port ${APP_PORT}"
 
     links:
       - db
       - "db:pgsql-server"
 
     ports:
-      - ${APP_PORT}:8000
+      - ${APP_PORT}:${APP_PORT}
     volumes:
       - type: bind
         source: .

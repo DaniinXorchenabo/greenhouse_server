@@ -5,11 +5,11 @@ from starlette.routing import Route, Mount
 from fastapi import FastAPI
 from starlette.staticfiles import StaticFiles
 
-from src.api.picalo_test_app.endpoints import HomeEndpoint
+from src.api.piccolo_test_app.endpoints import HomeEndpoint
 from src.db.gh.piccolo_app import APP_CONFIG
 # from src.db.gh.tables.superuser import Task
 
-from src.api.picalo_test_app.app import app as piccolo_app
+from src.api.piccolo_test_app.app import app as piccolo_app
 from os.path import dirname, join
 
 from fastapi import FastAPI
@@ -17,9 +17,9 @@ from piccolo_admin.endpoints import create_admin
 from starlette.routing import Route, Mount
 from starlette.staticfiles import StaticFiles
 
-from src.api.picalo_test_app.app import app as piccolo_app
+from src.api.piccolo_test_app.app import app as piccolo_app
 from src.api.security.app import app as security_app
-from src.api.picalo_test_app.endpoints import HomeEndpoint
+from src.api.piccolo_test_app.endpoints import HomeEndpoint
 from src.db.gh.piccolo_app import APP_CONFIG
 
 
@@ -41,7 +41,7 @@ def add_routers_func(app: FastAPI):
                 # allowed_hosts=['my_site.com']
             ),
         ),
-        Mount("/static/", StaticFiles(directory=join(dirname(__file__), "picalo_test_app", "static"))),
+        Mount("/static/", StaticFiles(directory=join(dirname(__file__), "piccolo_test_app", "static"))),
 
     ])
 
