@@ -7,10 +7,16 @@ from fastapi.security import SecurityScopes
 from pydantic import ValidationError
 
 from src.utils.security import verify_password
-from src.db.gh.tables import tab
+from src.db.gh import tables as tab
 from src.api.security.config import oauth2_scheme
 from src.api.security.schemes import TokenData
 
+__all__ = [
+    "get_user",
+    "authenticate_user",
+    "get_current_user",
+
+]
 
 SECRET_KEY = os.environ.get("AUTH_TOKEN_SECURITY")
 ALGORITHM = os.environ.get("TOKEN_ALGORITHM")
@@ -51,15 +57,16 @@ async def get_current_user(
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
-        token_scopes = payload.get("scopes", [])
-        token_data = TokenData(scopes=token_scopes, username=username)
+        token_data = TokenData(scopes=payload.get("scopes", []), username=username)
+        token_data.scopes = set(token_data.scopes)
     except (JWTError, ValidationError):
         raise credentials_exception
     user = await get_user(username=token_data.username)
     if user is None:
         raise credentials_exception
 
-    # Хватает ли разрешений на досту к этому роуту
+    # Хватает ли разрешений на доступ к этому роуту
+    token_data.scopes &= set(user.scopes)
     for scope in security_scopes.scopes:
         if scope not in token_data.scopes:  # то, что пришло в токене
             raise HTTPException(
@@ -68,4 +75,3 @@ async def get_current_user(
                 headers={"WWW-Authenticate": authenticate_value},
             )
     return user
-

@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from src.db.gh.tables.guest import User
 # from src.db.gh.tables.superuser import Task
 
+__all__ = ["app"]
 
 app = APIRouter(
     routes=[],

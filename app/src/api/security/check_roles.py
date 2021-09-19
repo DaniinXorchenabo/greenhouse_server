@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, Security
 
-from src.db.gh.tables import tab
+from src.db.gh import tables as tab
 from src.db.piccolo_conf import guest_engine
 from src.db.piccolo_conf import user_engine
 from src.db.piccolo_conf import admin_engine
@@ -9,6 +9,20 @@ from src.db.piccolo_conf import system_engine
 from src.utils.enums import Scopes
 from src.api.security.get_user import get_current_user
 from src.api.security.schemes import Tab
+
+
+__all__ = [
+    "guest",
+    "user",
+    "admin",
+    "developer",
+    "system",
+    "guest_transaction",
+    "user_transaction",
+    "admin_transaction",
+    "developer_transaction",
+    "system_transaction",
+]
 
 
 async def get_db():

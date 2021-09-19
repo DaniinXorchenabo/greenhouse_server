@@ -4,6 +4,9 @@ from datetime import datetime, timedelta
 
 from jose import jwt
 
+
+__all__ = ["create_access_token"]
+
 SECRET_KEY = os.environ.get("AUTH_TOKEN_SECURITY")
 ALGORITHM = os.environ.get("TOKEN_ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = 30

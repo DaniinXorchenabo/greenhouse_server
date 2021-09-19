@@ -1,10 +1,13 @@
 from uuid import uuid4, UUID
-from typing import Any, Optional
-from pydantic import BaseModel, validator, root_validator, Field
+from typing import Any, Optional, Literal
+from pydantic import BaseModel, validator, root_validator, Field, EmailStr
 
 from piccolo_api.crud.serializers import create_pydantic_model
 from src.utils.security import get_password_hash
 from src.db.gh.tables import system
+
+
+__all__ = ["DbUser", "UserCreate"]
 
 
 DbUser: Any = create_pydantic_model(table=system.User, model_name="User")
@@ -14,15 +17,12 @@ _UserCreate: Any = create_pydantic_model(
 
 
 class UserCreate(_UserCreate, BaseModel):
-    id:  Optional[UUID] = Field(None, title="Этот параметр передавать не нужно",
-                                           example="Этот параметр передавать не нужно")
-    password: str
-    hashed_password: Optional[str] = Field(None, title="Этот параметр передавать не нужно",
-                                           example="Этот параметр передавать не нужно")
+    password: str = Field(..., regex='^(?=.*[0-9].*)(?=.*[a-z].*)(?=.*[A-Z].*)[-_0-9a-zA-Z$%#^!@&*)(+=;:]{10,}$')
+    email: EmailStr
 
     @root_validator()
     def hashing_password(cls, values: dict):
-        values["hashed_password"] = get_password_hash(values["password"])
+        values["hashed_password"] = get_password_hash(values.get("password", ""))
         values['id'] = uuid4()
         return values
 

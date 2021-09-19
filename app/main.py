@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from os.path import dirname, join, split
 
-from src.db.gh.tables import tab
+from src.db.gh import tables as tab
 
 if os.environ.get("PG_SUPERUSER_NAME") is None:
 
@@ -27,7 +27,7 @@ if os.path.exists(path):
     load_dotenv(path)
 
 
-os.environ.update({key.split("#")[0].replace(" ", ""): val.split("#")[0].replace(" ", "") for key, val in os.environ.items() if not print(key, [val])} )
+os.environ.update({key.split("#")[0].replace(" ", ""): val.split("#")[0].replace(" ", "") for key, val in os.environ.items()} )
 
 from typing import Any, Optional, Awaitable
 
