@@ -1,15 +1,15 @@
 Add migrations using `piccolo migrations new home --auto`.
 
-1. выполнить миграции для создания таблиц picolo-пользователей
+1. выполнить миграции для создания таблиц piccolo-пользователей
 ```
 piccolo migrations forwards user
 piccolo migrations forwards session_auth
 ```
 
 
-2. создать пользователей picolo
+2. создать пользователей piccolo
 ```
-python create_picolo_users.py
+python create_piccolo_users.py
 ```
 3. Настроить postgres-пользователей 
 

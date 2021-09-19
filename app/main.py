@@ -21,10 +21,13 @@ if os.environ.get("PG_SUPERUSER_NAME") is None:
 path = dirname(__file__)
 while "app" in (path := split(path)[0]):
     pass
-path = join(path, "app", "src", "db", "picolo_conf.env")
+path = join(path, "app", "src", "db", "piccolo_conf.env")
 # os.environ["PICCOLO_CONF"] = "src.db.piccolo_conf"
 if os.path.exists(path):
     load_dotenv(path)
+
+
+os.environ.update({key.split("#")[0].replace(" ", ""): val.split("#")[0].replace(" ", "") for key, val in os.environ.items() if not print(key, [val])} )
 
 from typing import Any, Optional, Awaitable
 

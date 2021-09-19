@@ -16,9 +16,17 @@ cd greenhouse_server
 ```
 2.) Create `.env` file in root of project (see `example.env` file).
 
++ *Вы должны __обязательно__ создать новый файл, а не переименовывать старый! Это очень важно!*
+
++ *Войдите в новый файл и заполните __ВСЕ__ пропущенные поля!!! Впишите свои данные в строчки, где после
+`=` нет значений. Между названием переменной, знаком `=` и значением __не должно быть__ 
+пробелов!!! Это может иметь значение в некоторых системах!*
+
++ *В строчке с переменной также не должно быть комментариев (Любой текст после символа `#`)
+Это также может быть критично для некоторых систем!!!*
+
 3.) Start docker containers
 ```
-docker-compose build
 docker-compose up -d
 ```
 
@@ -34,6 +42,15 @@ cd greenhouse_server
 
 2.) Create `.env` file in root of project (see `example.env` file). Change connect postgres params for success connection.
 
++ *Вы должны __обязательно__ создать новый файл, а не переименовывать старый! Это очень важно!*
+
++ *Войдите в новый файл и заполните __ВСЕ__ пропущенные поля!!! Впишите свои данные в строчки, где после
+`=` нет значений. Между названием переменной, знаком `=` и значением __не должно быть__ 
+пробелов!!! Это может иметь значение в некоторых системах!*
+
++ *В строчке с переменной также не должно быть комментариев (Любой текст после символа `#`)
+Это также может быть критично для некоторых систем!!!*
+  
 3.) Install requirements
 ```
 pip install -r app/requirements/dev/requirements.txt
@@ -52,7 +69,8 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
 # Administration
 
-## Picolo admin
+----------------------------
+## Piccolo admin
 
 You can check it: [https://localhost:8000/admin](https://localhost:8000/admin)
 
@@ -87,7 +105,9 @@ Check it: [http://localhost:8080/](http://localhost:8080/)
 You can learn more this: [https://linuxhint.com/postgresql_docker/](https://linuxhint.com/postgresql_docker/)
 
 
-## Documentation
+# Documentation
+
+---------------------------
 
 Check it: /docs [http://localhost:8040/docs](http://localhost:8040/docs) (You need in changeing 8040 to your port)
 

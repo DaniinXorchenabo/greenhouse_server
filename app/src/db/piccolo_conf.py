@@ -23,6 +23,8 @@ from piccolo.engine.postgres import PostgresEngine
 
 from piccolo.conf.apps import AppRegistry
 
+
+os.environ.update({key.split("#")[0].replace(" ", ""): val.split("#")[0].replace(" ", "") for key, val in os.environ.items()})
 print("%%%%%-------------", os.environ.get("PG_SUPERUSER_NAME"), __name__)
 DB = PostgresEngine(
     config={
