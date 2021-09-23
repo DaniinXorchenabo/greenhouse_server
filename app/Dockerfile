@@ -1,5 +1,5 @@
-FROM python:3.9.6-slim AS builder
-
+#FROM python:3.9.6-slim AS builder
+FROM python:3
 COPY ./requirements/dev/requirements.txt ./requirements.txt
 RUN pip install -r ./requirements.txt --no-cache-dir
 #RUN mkdir ./app/

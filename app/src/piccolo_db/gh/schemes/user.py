@@ -2,7 +2,7 @@ from typing import Any
 
 from piccolo_api.crud.serializers import create_pydantic_model
 
-from src.db.gh.tables import user
+from src.piccolo_db.gh.tables import user
 
 
 __all__ = ['User', "UserOut", "UserCreate"]

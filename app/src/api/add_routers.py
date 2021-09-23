@@ -6,7 +6,7 @@ from starlette.routing import Route, Mount
 from starlette.staticfiles import StaticFiles
 
 from src.api.piccolo_test_app.endpoints import HomeEndpoint
-from src.db.gh.piccolo_app import APP_CONFIG
+from src.piccolo_db.gh.piccolo_app import APP_CONFIG
 
 from ..api import piccolo_app
 from ..api import android_app

@@ -4,7 +4,7 @@ from pydantic import BaseModel, validator, root_validator, Field, EmailStr
 
 from piccolo_api.crud.serializers import create_pydantic_model
 from src.utils.security import get_password_hash
-from src.db.gh.tables import system
+from src.piccolo_db.gh.tables import system
 
 
 __all__ = ["DbUser", "UserCreate"]

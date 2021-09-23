@@ -2,12 +2,17 @@ from enum import Enum
 
 from piccolo.columns import Varchar, Array, UUID
 from piccolo.table import Table
+from piccolo.columns import Varchar, Array, UUID
+from piccolo.table import Table
+from piccolo.columns import Varchar, ForeignKey, ForeignKeyMeta
+from piccolo.columns.reference import LazyTableReference
+from piccolo.columns.base import Column, ForeignKeyMeta, OnDelete, OnUpdate
 
-from src.db.piccolo_conf import system_engine
+from src.piccolo_db.piccolo_conf import developer_engine
 from src.utils.enums import Scopes
 
 
-class User(Table, tablename="base_user", db=system_engine):
+class User(Table, tablename="base_user", db=developer_engine):
 
     id = UUID(primary_key=True, required=True, unique=True)
     name = Varchar(required=True)

@@ -1,1 +1,0 @@
-from src.db.gh.tables import developer

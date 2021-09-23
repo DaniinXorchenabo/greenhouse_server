@@ -3,7 +3,7 @@ from enum import Enum
 from piccolo.columns import Varchar
 from piccolo.table import Table
 
-from src.db.piccolo_conf import guest_engine
+from src.piccolo_db.piccolo_conf import guest_engine
 from src.utils.enums import Scopes
 
 

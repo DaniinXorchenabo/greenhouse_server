@@ -90,13 +90,13 @@ try:
     print("!!!!!!!!!!!_-_---------------------------")
     APP_REGISTRY = AppRegistry(
         apps=[
-            "src.db.gh.piccolo_app",
+            "src.piccolo_db.gh.piccolo_app",
             "piccolo_admin.piccolo_app"
         ]
     )
 
 except Exception as e:
-    print(e)
+    print("try import as gh.piccolo_app", [e])
     piccolo_conf = os.environ.pop("PICCOLO_CONF", None)
     print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
     APP_REGISTRY = AppRegistry(

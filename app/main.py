@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from os.path import dirname, join, split
 
-from src.db.gh import tables as tab
+from src.piccolo_db.gh import tables as tab
 
 if os.environ.get("PG_SUPERUSER_NAME") is None:
 
@@ -21,8 +21,8 @@ if os.environ.get("PG_SUPERUSER_NAME") is None:
 path = dirname(__file__)
 while "app" in (path := split(path)[0]):
     pass
-path = join(path, "app", "src", "db", "piccolo_conf.env")
-# os.environ["PICCOLO_CONF"] = "src.db.piccolo_conf"
+path = join(path, "app", "src", "piccolo_db", "piccolo_conf.env")
+# os.environ["PICCOLO_CONF"] = "src.piccolo_db.piccolo_conf"
 if os.path.exists(path):
     load_dotenv(path)
 
@@ -37,7 +37,7 @@ from src.init_app import init_app_func
 import importlib
 from pydantic import BaseModel
 
-from src.db.piccolo_conf import system_engine, guest_engine
+from src.piccolo_db.piccolo_conf import system_engine, guest_engine
 from src.api.security.check_roles import admin
 from src.api.security.schemes import Tab
 

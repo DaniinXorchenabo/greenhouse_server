@@ -3,7 +3,7 @@ from piccolo.apps.migrations.auto import MigrationManager
 
 ID = "2021-09-12T00:09:31:419094"
 VERSION = "0.45.1"
-DESCRIPTION = "Создание пользователей для piccolo db admin"
+DESCRIPTION = "Создание пользователей для piccolo piccolo_db admin"
 
 
 async def forwards():

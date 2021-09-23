@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from src.db.gh.tables.guest import User
-# from src.db.gh.tables.superuser import Task
+from src.piccolo_db.gh.tables.guest import User
+# from src.piccolo_db.gh.tables.superuser import Task
 
 __all__ = ["app"]
 
