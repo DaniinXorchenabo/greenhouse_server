@@ -52,7 +52,8 @@ services:
       - db
 
     command: >
-      bash -c "cd ./code/gh_server/app/src/db
+      bash -c "cd ../.. 
+      && cd code/gh_server/app/src/piccolo_db
       && sleep 1
       && piccolo --diagnose
       && piccolo migrations forwards gh
