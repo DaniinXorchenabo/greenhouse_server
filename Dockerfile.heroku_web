@@ -10,9 +10,9 @@ COPY --chown=myuser:myuser app/requirements/dev/requirements.txt ./requirements.
 
 ENV PATH="/home/myuser/.local/bin:${PATH}"
 COPY --chown=myuser:myuser app/requirements/dev/requirements.txt ./requirements.txt
-
+RUN ls
 # RUN pip install —upgrade pip
-RUN pip install --user -r ./requirements.txt --no-cache-dir
+RUN pip install --user -r -q ./requirements.txt --no-cache-dir
 #RUN mkdir ./app/
 #COPY .env .env
 #WORKDIR ./app
