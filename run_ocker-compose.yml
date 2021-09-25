@@ -35,13 +35,11 @@ services:
 
   web:
     build:
-      context: .
-      dockerfile: heroku_Dockerfile
+      context: ./app
+      dockerfile: running_env_python_Dockerfile
       cache_from:
         - python
-    image: daniinxorchenabo/gh_server:heroku
-
-#    container_name: daniinxorchenabo/gh_server:heroku
+    image: daniinxorchenabo/gh_server
 
     networks:
       - local_db
@@ -68,6 +66,10 @@ services:
 
     ports:
       - '${APP_PORT}:${APP_PORT}'
+    volumes:
+      - type: bind
+        source: .
+        target: /code/gh_server
 
   pgadmin:
     image: dpage/pgadmin4:5.7

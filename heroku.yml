@@ -1,0 +1,15 @@
+setup:
+  addons:
+    - plan: heroku-postgresql
+      as: db
+build:
+
+  docker:
+    web: Dockerfile.heroku_web
+release:
+  image: db
+  command: bash -c "cd ../.. && cd code/gh_server/app/src/piccolo_db && sleep 1 && piccolo --diagnose && piccolo migrations forwards gh && cd ../.."
+
+run:
+  db: postgres -c max_connections=300 -c shared_buffers=80MB
+  web: vicorn main:app --reload --host 0.0.0.0 --port $PORT
