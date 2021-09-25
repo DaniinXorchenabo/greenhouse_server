@@ -34,12 +34,7 @@ services:
       - '${PGPORT}'
 
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile.heroku_web
-      cache_from:
-        - python
-    image: daniinxorchenabo/gh_server:heroku
+    image: daniinxorchenabo/gh_server
 
 #    container_name: daniinxorchenabo/gh_server:heroku
 
