@@ -35,8 +35,8 @@ services:
 
   web:
     build:
-      context: ./app
-      dockerfile: python_env_Dockerfile
+      context: app
+      dockerfile: app/python_env_Dockerfile
       cache_from:
         - python
     image: daniinxorchenabo/gh_server
