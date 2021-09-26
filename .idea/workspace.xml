@@ -1,40 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="513b4280-5068-44b6-8ce0-cac7e914b0e3" name="Default Changelist" comment="refactoring structure">
-      <change afterPath="$PROJECT_DIR$/content/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/content/ws_tunnel/client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/content/ws_tunnel/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/Dockerfile.heroku_web" beforeDir="false" afterPath="$PROJECT_DIR$/content/ws_tunnel/__Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/build-docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/content/build-docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/content/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/content/ws_tunnel/requirements.txt" afterDir="false" />
+    <list default="true" id="c504c02d-d346-4865-94b9-e75eaa4d5e12" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/.gitlab-ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/python_env_Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/app/python_env_Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/requirements/dev/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/requirements/dev/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/requirements/production/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/requirements/production/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/add_routers.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/add_routers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/android/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/android/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/android/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/android/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/piccolo_test_app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/piccolo_test_app/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/piccolo_test_app/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/piccolo_test_app/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/piccolo_test_app/endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/piccolo_test_app/endpoints.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/piccolo_test_app/static/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/piccolo_test_app/static/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/piccolo_test_app/static/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/piccolo_test_app/static/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/piccolo_test_app/templates/base.html.jinja" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/piccolo_test_app/templates/base.html.jinja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/piccolo_test_app/templates/home.html.jinja" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/piccolo_test_app/templates/home.html.jinja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/security/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/security/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/security/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/security/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/security/check_roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/security/check_roles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/security/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/security/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/security/get_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/security/get_user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/security/schemes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/security/schemes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/security/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/security/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/site/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/site/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/api/site/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/api/site/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/init_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/init_app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/create_piccolo_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/create_piccolo_users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/piccolo_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/piccolo_app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/piccolo_migrations/1_1_create_picolo_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/piccolo_migrations/1_1_create_picolo_users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/piccolo_migrations/1_2_create_db_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/piccolo_migrations/1_2_create_db_users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/piccolo_migrations/1_3_add_access_for_db_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/piccolo_migrations/1_3_add_access_for_db_users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/piccolo_migrations/2021-09-11T20-55-14-024000.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/piccolo_migrations/2021-09-11T20-55-14-024000.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/piccolo_migrations/2021-09-16T15-34-27-890907.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/piccolo_migrations/2021-09-16T15-34-27-890907.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/piccolo_migrations/2021-09-16T18-39-54-770804.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/piccolo_migrations/2021-09-16T18-39-54-770804.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/piccolo_migrations/2021-09-17T01-03-29-421165.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/piccolo_migrations/2021-09-17T01-03-29-421165.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/piccolo_migrations/2021-09-20T14-37-20-902945.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/piccolo_migrations/2021-09-20T14-37-20-902945.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/piccolo_migrations/2021-09-20T14-42-10-892069.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/piccolo_migrations/2021-09-20T14-42-10-892069.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/piccolo_migrations/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/piccolo_migrations/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/schemes/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/schemes/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/schemes/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/schemes/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/schemes/developer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/schemes/developer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/schemes/guest.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/schemes/guest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/schemes/superuser.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/schemes/superuser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/schemes/system.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/schemes/system.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/schemes/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/schemes/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/tables/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/tables/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/tables/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/tables/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/tables/developer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/tables/developer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/tables/guest.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/tables/guest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/tables/superuser.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/tables/superuser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/tables/system.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/tables/system.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/gh/tables/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/gh/tables/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/piccolo_conf.env" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/piccolo_conf.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/piccolo_db/piccolo_conf.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/piccolo_db/piccolo_conf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/utils/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/utils/enums.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/utils/enums.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/src/utils/security.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/utils/security.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/app/test_connect.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/test_connect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/build-docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build-docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/example.env" beforeDir="false" afterPath="$PROJECT_DIR$/example.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/ws_tunnel/__Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/ws_tunnel/__Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/ws_tunnel/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/ws_tunnel/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/ws_tunnel/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ws_tunnel/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/ws_tunnel/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/ws_tunnel/server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager">
-    <option name="groupingKeys">
-      <option value="directory" />
-    </option>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="gitlab/main" />
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/content" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1yaRQscLz249JiWqlnrIxZIpooY" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1yg10LlcVleFLsBlVzlNd3vPLoM" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -44,185 +95,18 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="G:\programs\jobs\greenhouse_server_fix_bugs" />
-      <recent name="G:\programs\jobs\greenhouse_server_fix_bugs\app" />
-      <recent name="G:\programs\jobs\greenhouse_server_fix_bugs\ws_tunnel" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="G:\programs\jobs\greenhouse_server_fix_bugs" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="greenhouse_server_fix_bugs" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.main" />
-      </list>
-    </recent_temporary>
+    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="513b4280-5068-44b6-8ce0-cac7e914b0e3" name="Default Changelist" comment="" />
-      <created>1632487701110</created>
+      <changelist id="c504c02d-d346-4865-94b9-e75eaa4d5e12" name="Default Changelist" comment="" />
+      <created>1632658194506</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1632487701110</updated>
-      <workItem from="1632487702938" duration="312000" />
-      <workItem from="1632517046564" duration="26032000" />
+      <updated>1632658194506</updated>
+      <workItem from="1632658196393" duration="1331000" />
     </task>
-    <task id="LOCAL-00001" summary="...">
-      <created>1632517096240</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1632517096240</updated>
-    </task>
-    <task id="LOCAL-00002" summary="try deploy in heroku">
-      <created>1632579191737</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1632579191737</updated>
-    </task>
-    <task id="LOCAL-00003" summary="move migration script">
-      <created>1632580609710</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1632580609710</updated>
-    </task>
-    <task id="LOCAL-00004" summary="delete connection settings for postgres">
-      <created>1632580779889</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1632580779889</updated>
-    </task>
-    <task id="LOCAL-00005" summary="update COPY command">
-      <created>1632580961667</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1632580961667</updated>
-    </task>
-    <task id="LOCAL-00006" summary="fixing a bug">
-      <created>1632582793441</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1632582793441</updated>
-    </task>
-    <task id="LOCAL-00007" summary="fixing a bug">
-      <created>1632582990617</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1632582990617</updated>
-    </task>
-    <task id="LOCAL-00008" summary="fixing a bug">
-      <created>1632583712350</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1632583712350</updated>
-    </task>
-    <task id="LOCAL-00009" summary="fixing a bug">
-      <created>1632583784513</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1632583784513</updated>
-    </task>
-    <task id="LOCAL-00010" summary="fixing the bug">
-      <created>1632583883727</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1632583883727</updated>
-    </task>
-    <task id="LOCAL-00011" summary="fixing the bug">
-      <created>1632583995587</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1632583995587</updated>
-    </task>
-    <task id="LOCAL-00012" summary="fixing the bug">
-      <created>1632584207851</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1632584207851</updated>
-    </task>
-    <task id="LOCAL-00013" summary="fixing the bug">
-      <created>1632584361768</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1632584361768</updated>
-    </task>
-    <task id="LOCAL-00014" summary="fixing the bug">
-      <created>1632584578635</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1632584578635</updated>
-    </task>
-    <task id="LOCAL-00015" summary="fixing the bug">
-      <created>1632584780544</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1632584780544</updated>
-    </task>
-    <task id="LOCAL-00016" summary="fixing the bug">
-      <created>1632585351892</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1632585351892</updated>
-    </task>
-    <task id="LOCAL-00017" summary="fixing the bug with deploying">
-      <created>1632588004951</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1632588004951</updated>
-    </task>
-    <task id="LOCAL-00018" summary="refactoring structure">
-      <created>1632590088230</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1632590088230</updated>
-    </task>
-    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,20 +122,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="..." />
-    <MESSAGE value="try deploy in heroku" />
-    <MESSAGE value="move migration script" />
-    <MESSAGE value="delete connection settings for postgres" />
-    <MESSAGE value="update COPY command" />
-    <MESSAGE value="fixing a bug" />
-    <MESSAGE value="fixing the bug" />
-    <MESSAGE value="fixing the bug with deploying" />
-    <MESSAGE value="refactoring structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring structure" />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/greenhouse_server_fix_bugs$main.coverage" NAME="main Coverage Results" MODIFIED="1632487988991" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
   </component>
 </project>
