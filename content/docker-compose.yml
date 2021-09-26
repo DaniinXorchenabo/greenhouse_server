@@ -15,10 +15,12 @@ networks:
 
 services:
   db:
-    image: postgres:13-alpine
+    image: postgres:13
 #    image: postgres:13
-    command: postgres -c max_connections=300 -c shared_buffers=80MB
+#    command: postgres -c max_connections=300 -c shared_buffers=80MB
     restart: always
+    env_file:
+      - .env
     environment:
       POSTGRES_DB: ${PGDATABASE}
       POSTGRES_USER: ${PG_SUPERUSER_NAME}
@@ -69,6 +71,8 @@ services:
     depends_on:
       - db
     restart: always
+    env_file:
+      - .env
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
