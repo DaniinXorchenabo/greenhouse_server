@@ -2,6 +2,9 @@
 
 Сервер для умной теплицы
 
+[//]: < ([![Развертывание](https://button.deta.dev/1/svg)](https://go.deta.dev/deploy?repo=https://github.com/DaniinXorchenabo/greenhouse_server)) >
+
+
 ## Run
 
 ----
