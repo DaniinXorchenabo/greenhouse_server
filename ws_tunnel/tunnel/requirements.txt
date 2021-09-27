@@ -9,3 +9,4 @@ jinja2
 dill
 pytest-asyncio
 httpx
+orjson
