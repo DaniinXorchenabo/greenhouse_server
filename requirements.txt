@@ -10,3 +10,4 @@ dill
 pytest-asyncio
 httpx
 orjson
+gunicorn
