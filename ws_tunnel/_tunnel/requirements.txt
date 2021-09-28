@@ -1,0 +1,12 @@
+wheel
+python-dotenv
+fastapi[all]
+python-multipart
+python-jose[cryptography]
+passlib[bcrypt]
+uvicorn[standard]
+jinja2
+dill
+pytest-asyncio
+httpx
+orjson
