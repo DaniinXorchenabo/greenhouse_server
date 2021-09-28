@@ -1,3 +1,4 @@
+import os
 import time
 import inspect
 import asyncio
@@ -28,8 +29,7 @@ Response.__getstate__ = PickleResponse.__getstate__
 websocket_pool: set = set()
 
 app = FastAPI()
-# url = "wss://gh1proxy.herokuapp.com/tunnel/ws"
-url = "ws://localhost:8000/tunnel/ws"
+url = os.environ.get("PROXY_URL")
 
 socket_workers = []
 
