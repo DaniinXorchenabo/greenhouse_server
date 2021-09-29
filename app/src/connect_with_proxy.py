@@ -7,8 +7,6 @@ import uvicorn
 from fastapi import FastAPI, Request, Response, WebSocket
 from starlette.requests import empty_send, empty_receive
 import dill
-import h11
-from httpx import AsyncClient
 from random import randint
 
 import websockets
@@ -98,7 +96,6 @@ def add_proxy(app: FastAPI) -> FastAPI:
             await send_body(resp_body, request.scope.get("current_websocket_connection"))
             await request.scope.get("current_websocket_connection").send("end")
             print([resp])
-
         return response
 
     return app
