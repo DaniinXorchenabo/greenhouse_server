@@ -13,32 +13,28 @@ from random import randint
 
 import websockets
 
+__all__ = ['add_proxy']
 
+url = os.environ.get("PROXY_URL", "ws://localhost:8000/tunnel/ws")
 ws_pool_size = 10
 
 
-class PickleResponse(Response):
-    def __getstate__(self):
-        attributes = self.__dict__.copy()
-        del attributes['body_iterator']
-        return attributes
+def response_getstate_(self):
+    attributes = self.__dict__.copy()
+    del attributes['body_iterator']
+    return attributes
 
 
-Response.__getstate__ = PickleResponse.__getstate__
+Response.__getstate__ = response_getstate_
 
 websocket_pool: set = set()
-
-app = FastAPI()
-url = os.environ.get("PROXY_URL")
 
 socket_workers = []
 
 
 async def send_body(body, websocket):
     async for i in body:
-        print([i])
-        # o = dill.dumps(i, byref=True)
-        # print([i], [o])
+        # print([i])
         await websocket.send(i)
 
 
@@ -48,14 +44,8 @@ async def websocket_worker():
             async with websockets.connect(url) as ws:
                 websocket_pool.add(ws)
                 print('сделал соединение')
-                # await asyncio.sleep(10)
-
-                await ws.ping()
-                print("пинг")
-                # await asyncio.sleep(2)
                 try:
                     while True:
-                        # print('жду данных')
                         scope = await ws.recv()
                         if scope == "ping":
                             continue
@@ -78,47 +68,42 @@ async def websocket_worker():
             await asyncio.sleep(randint(1, 30))
 
 
-@app.on_event("startup")
-async def create_ws_pool():
-    for i in range(ws_pool_size):
-        socket_workers.append(websocket_worker())
+def add_proxy(app: FastAPI):
 
-    await asyncio.gather(*socket_workers)
+    @app.on_event("startup")
+    async def create_ws_pool():
+        for i in range(ws_pool_size):
+            socket_workers.append(websocket_worker())
 
+        await asyncio.gather(*socket_workers)
 
-@app.on_event('shutdown')
-async def close_ws_pool():
-    for task in socket_workers:
-        task.cancel()
-        try:
+    @app.on_event('shutdown')
+    async def close_ws_pool():
+        for task in socket_workers:
+            task.cancel()
+            try:
+                await task
+                print('соединение с вебсокетом закрыто')
+            except asyncio.CancelledError:
+                print("Ошибка при закрытии корутины работника вебсокета")
 
-            await task
-            print('соединение с вебсокетом закрыто')
-        except asyncio.CancelledError:
-            print("Ошибка при закрытии корутины работника вебсокета")
+    @app.middleware("http")
+    async def add_process_time_header(request: Request, call_next):
+        response = await call_next(request)
+        print("--**&6^^", response.__dict__)
+        if request.scope.get("current_websocket_connection"):
+            resp_body = response.body_iterator
+            resp = dill.dumps(response, byref=True)
 
+            await request.scope.get("current_websocket_connection").send(resp)
+            await send_body(resp_body, request.scope.get("current_websocket_connection"))
+            await request.scope.get("current_websocket_connection").send("end")
+            print([resp])
 
-@app.get("/")
-async def router():
-    return {"": ""}
+        return response
 
-
-@app.middleware("http")
-async def add_process_time_header(request: Request, call_next):
-    response = await call_next(request)
-    print("--**&6^^", response.__dict__)
-    if request.scope.get("current_websocket_connection"):
-        resp_body = response.body_iterator
-        resp = dill.dumps(response, byref=True)
-
-        await request.scope.get("current_websocket_connection").send(resp)
-        await send_body(resp_body, request.scope.get("current_websocket_connection"))
-        await request.scope.get("current_websocket_connection").send("end")
-        print([resp])
-
-    return response
+    return app
 
 
 if __name__ == "__main__":
-    # asyncio.run(create_ws_pool())
     uvicorn.run("server:app", host="localhost", port=8010, reload=True)
