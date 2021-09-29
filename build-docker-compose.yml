@@ -36,7 +36,7 @@ services:
   web:
     build:
       context: app
-      dockerfile: app/python_env_Dockerfile
+      dockerfile: python_env_Dockerfile
       cache_from:
         - python
     image: daniinxorchenabo/gh_server
@@ -68,6 +68,10 @@ services:
 
     ports:
       - '${APP_PORT}:${APP_PORT}'
+    volumes:
+      - type: bind
+        source: .
+        target: /code/gh_server
 
   pgadmin:
     image: dpage/pgadmin4:5.7
