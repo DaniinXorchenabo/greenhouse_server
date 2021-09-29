@@ -8,3 +8,5 @@ uvicorn[standard]
 jinja2
 piccolo[postgres] >= 0.48.0
 piccolo_admin
+dill
+httpx
