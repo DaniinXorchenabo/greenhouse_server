@@ -38,37 +38,36 @@ async def send_body(body, websocket):
         await websocket.send(i)
 
 
-async def websocket_worker():
-    while True:
-        try:
-            async with websockets.connect(url) as ws:
-                websocket_pool.add(ws)
-                print('сделал соединение')
-                try:
-                    while True:
-                        scope = await ws.recv()
-                        if scope == "ping":
-                            continue
-                        print('получил данные', scope)
-                        r_scope = dill.loads(scope)
-                        r_scope["current_websocket_connection"] = ws
-                        try:
-                            print("*-----------------", r_scope)
-                            await app(r_scope, empty_receive, empty_send)
-                        except RuntimeError as e:
-                            print("произошла ошибка в файле tunnel.py, в websocket_worker", e)
-                except asyncio.CancelledError:
-                    await ws.close(code=1001, reason="Stopping server")
-                    break
-        except websockets.exceptions.ConnectionClosedError as e:
-            print("Прокси разорвал соединение, пытаемся переподключиться в websocket_worker", e)
-            await asyncio.sleep(1)
-        except OSError as e:
-            print(f"{time.ctime()}: Не удаётся подключиться к прокси серверу, websocket_worker():", e)
-            await asyncio.sleep(randint(1, 30))
+def add_proxy(app: FastAPI) -> FastAPI:
 
-
-def add_proxy(app: FastAPI):
+    async def websocket_worker():
+        while True:
+            try:
+                async with websockets.connect(url) as ws:
+                    websocket_pool.add(ws)
+                    print('сделал соединение')
+                    try:
+                        while True:
+                            scope = await ws.recv()
+                            if scope == "ping":
+                                continue
+                            print('получил данные', scope)
+                            r_scope = dill.loads(scope)
+                            r_scope["current_websocket_connection"] = ws
+                            try:
+                                print("*-----------------", r_scope)
+                                await app(r_scope, empty_receive, empty_send)
+                            except RuntimeError as e:
+                                print("произошла ошибка в файле tunnel.py, в websocket_worker", e)
+                    except asyncio.CancelledError:
+                        await ws.close(code=1001, reason="Stopping server")
+                        break
+            except websockets.exceptions.ConnectionClosedError as e:
+                print("Прокси разорвал соединение, пытаемся переподключиться в websocket_worker", e)
+                await asyncio.sleep(1)
+            except OSError as e:
+                print(f"{time.ctime()}: Не удаётся подключиться к прокси серверу, websocket_worker():", e)
+                await asyncio.sleep(randint(1, 30))
 
     @app.on_event("startup")
     async def create_ws_pool():

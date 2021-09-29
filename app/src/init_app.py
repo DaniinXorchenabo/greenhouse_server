@@ -9,6 +9,7 @@ from src.piccolo_db.piccolo_conf import user_engine
 from src.piccolo_db.piccolo_conf import admin_engine
 from src.piccolo_db.piccolo_conf import developer_engine
 from src.piccolo_db.piccolo_conf import system_engine
+from src.connect_with_proxy import add_proxy
 
 
 def init_app_func(app: FastAPI):
@@ -68,6 +69,8 @@ def init_app_func(app: FastAPI):
             status_code=400,
             content={"message": f"Какое-то из полей запроса уже имеется в БД. Поле должно быть уникальным!"},
         )
+
+    add_proxy(app)
 
 
 
