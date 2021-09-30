@@ -1,17 +1,13 @@
 import asyncio
 import time
-import inspect
 from random import randint
 from typing import Union
 
-import uvicorn
 from fastapi import FastAPI, Request, Response, WebSocket
 from fastapi.responses import PlainTextResponse, JSONResponse
 import dill
 from fastapi.middleware.cors import CORSMiddleware
 import websockets
-# uvicorn.
-import h11
 
 
 class PickleResponse(Response):
@@ -166,25 +162,3 @@ async def app(scope, receive, send):
     response: Response = await ConnectionManager.send_to_server(_scope)
 
     await response(scope, receive, send)
-
-
-# import uvicorn
-# from fastapi import FastAPI
-#
-# app = FastAPI()
-#
-#
-# @app.get("/")
-# def read_root():
-#     return {"Hello": "World"}
-#
-#
-# @app.get("/items/{item_id}")
-# def read_item(item_id: int):
-#     return {"item_id": item_id}
-
-
-if __name__ == "__main__":
-    import os
-
-    uvicorn.run("main:app", host="0.0.0.0", port=os.environ.get("PORT", 8000), reload=True)
