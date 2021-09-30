@@ -49,11 +49,11 @@ def add_proxy(app: FastAPI) -> FastAPI:
                             scope = await ws.recv()
                             if scope == "ping":
                                 continue
-                            print('получил данные', scope)
+                            print('получил данные')
                             r_scope = dill.loads(scope)
                             r_scope["current_websocket_connection"] = ws
                             try:
-                                print("*-----------------", r_scope)
+                                # print("*-----------------")
                                 await app(r_scope, empty_receive, empty_send)
                             except RuntimeError as e:
                                 print("произошла ошибка в файле tunnel.py, в websocket_worker", e)
@@ -87,7 +87,7 @@ def add_proxy(app: FastAPI) -> FastAPI:
     @app.middleware("http")
     async def add_process_time_header(request: Request, call_next):
         response = await call_next(request)
-        print("--**&6^^", response.__dict__)
+        # print("--**&6^^", response.__dict__)
         if request.scope.get("current_websocket_connection"):
             resp_body = response.body_iterator
             resp = dill.dumps(response, byref=True)
@@ -95,7 +95,7 @@ def add_proxy(app: FastAPI) -> FastAPI:
             await request.scope.get("current_websocket_connection").send(resp)
             await send_body(resp_body, request.scope.get("current_websocket_connection"))
             await request.scope.get("current_websocket_connection").send("end")
-            print([resp])
+            # print([resp])
         return response
 
     return app
