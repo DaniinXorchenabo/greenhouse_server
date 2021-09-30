@@ -36,7 +36,7 @@ services:
   web:
     #    build:
     #      context: app
-    #      dockerfile: python_env_Dockerfile
+    #      dockerfile: old_python_env_Dockerfile
     #      cache_from:
     #        - python
     #    image: daniinxorchenabo/gh_server
@@ -45,10 +45,10 @@ services:
 
     build:
       context: app
-      dockerfile: test_Dockerfile
+      dockerfile: python_env_Dockerfile
       cache_from:
         - python
-    image: daniinxorchenabo/test_gh_server
+    image: daniinxorchenabo/gh_server
 
     networks:
       - local_db
