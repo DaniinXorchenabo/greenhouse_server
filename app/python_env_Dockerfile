@@ -19,9 +19,6 @@ USER myuser
 WORKDIR /home/myuser
 ENV PATH="/home/myuser/.local/bin:${PATH}"
 
-
-
-
 #FROM python:3.9.6 AS builder
 ##FROM python:3
 ## docker run -it --name gh_sevxer_web_1 daniinxorchenabo/test_gh_server  /bin/bash
