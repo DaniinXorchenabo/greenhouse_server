@@ -1,3 +1,5 @@
+import os
+
 import asyncpg
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
@@ -70,7 +72,8 @@ def init_app_func(app: FastAPI):
             content={"message": f"Какое-то из полей запроса уже имеется в БД. Поле должно быть уникальным!"},
         )
 
-    add_proxy(app)
+    if os.environ.get("USE_PROXY", "false") == "true":
+        add_proxy(app)
 
 
 
