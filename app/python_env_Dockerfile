@@ -18,7 +18,7 @@ RUN groupadd -r myuser && useradd --no-log-init -r -g root myuser
 USER myuser
 WORKDIR /home/myuser
 ENV PATH="/home/myuser/.local/bin:${PATH}"
-CMD /bin/sh
+
 
 
 
