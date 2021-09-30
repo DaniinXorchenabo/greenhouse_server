@@ -2,11 +2,11 @@ FROM python:3.9.6 AS builder
 #FROM python:3
 # docker run -it --name gh_sevxer_web_1 daniinxorchenabo/test_gh_server  /bin/bash
 #RUN adduser myuser
-RUN groupadd -r myuser && useradd --no-log-init -r -g myuser myuser
+RUN groupadd -r myuser && useradd --no-log-init -r -g root myuser
 USER myuser
 WORKDIR /home/myuser
 
-COPY --chown=myuser:myuser requirements/dev/requirements.txt ./requirements.txt
+COPY --chown=myuser:root requirements/dev/requirements.txt ./requirements.txt
 
 ENV PATH="/home/myuser/.local/bin:${PATH}"
 #COPY --chown=myuser:myuser . .
@@ -15,10 +15,10 @@ RUN pip install --user -r ./requirements.txt --no-cache-dir
 CMD /bin/sh
 
 FROM python:3.9.6-slim
-RUN groupadd -r myuser && useradd --no-log-init -r -g myuser myuser
+RUN groupadd -r myuser && useradd --no-log-init -r -g root myuser
 USER myuser
 WORKDIR /home/myuser
-COPY --from=builder --chown=myuser:myuser /home/myuser/.local/bin /home/myuser/.local/bin
-COPY --from=builder --chown=myuser:myuser /home/myuser/.local/lib/python3.9/ /home/myuser/.local/lib/python3.9/
+COPY --from=builder --chown=myuser:root /home/myuser/.local/bin /home/myuser/.local/bin
+COPY --from=builder --chown=myuser:root /home/myuser/.local/lib/python3.9/ /home/myuser/.local/lib/python3.9/
 ENV PATH="/home/myuser/.local/bin:${PATH}"
 CMD /bin/sh
