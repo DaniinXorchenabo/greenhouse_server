@@ -49,15 +49,16 @@ services:
       PGHOST: pgsql-server
     depends_on:
       - db
+    command: /bin/sh
 
-    command: >
-      bash -c "cd ../.. 
-      && cd code/gh_server/app/src/piccolo_db
-      && sleep 1
-      && piccolo --diagnose
-      && piccolo migrations forwards gh
-      && cd ../..
-      && uvicorn main:app --reload --host 0.0.0.0 --port ${APP_PORT}"
+#    command: >
+#      bash -c "cd ../..
+#      && cd code/gh_server/app/src/piccolo_db
+#      && sleep 1
+#      && piccolo --diagnose
+#      && piccolo migrations forwards gh
+#      && cd ../..
+#      && uvicorn main:app --reload --host 0.0.0.0 --port ${APP_PORT}"
 
     links:
       - "db"

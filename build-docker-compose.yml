@@ -16,7 +16,7 @@ networks:
 services:
   db:
     image: postgres:13
-#    image: postgres:13
+    #    image: postgres:13
     command: postgres -c max_connections=300 -c shared_buffers=80MB
     restart: always
     environment:
@@ -34,14 +34,21 @@ services:
       - '${PGPORT}'
 
   web:
+    #    build:
+    #      context: app
+    #      dockerfile: python_env_Dockerfile
+    #      cache_from:
+    #        - python
+    #    image: daniinxorchenabo/gh_server
+
+    #    container_name: daniinxorchenabo/gh_server:heroku
+
     build:
       context: app
-      dockerfile: python_env_Dockerfile
+      dockerfile: test_Dockerfile
       cache_from:
         - python
-    image: daniinxorchenabo/gh_server
-
-#    container_name: daniinxorchenabo/gh_server:heroku
+    image: daniinxorchenabo/test_gh_server
 
     networks:
       - local_db
