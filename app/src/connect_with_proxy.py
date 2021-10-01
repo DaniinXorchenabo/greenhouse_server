@@ -30,9 +30,29 @@ websocket_pool: set = set()
 socket_workers = []
 
 
+class MyReceive:
+    def __init__(self, current_websocket):
+        self.current_websocket = current_websocket
+
+    async def __call__(self):
+        print("Получение тела")
+        i = await self.current_websocket.recv()
+        try:
+            i = dill.loads(i)
+        except TypeError:
+            raise RuntimeError()
+        print(i)
+        if i == "end":
+            return dict()
+        obj = i
+        # obj = dill.loads(i['bytes'])
+        print('часть тела:', obj, [obj], type(obj))
+        return obj
+
+
 async def send_body(body, websocket):
     async for i in body:
-        # print([i])
+        print([i], type(i))
         await websocket.send(i)
 
 
@@ -47,14 +67,16 @@ def add_proxy(app: FastAPI) -> FastAPI:
                     try:
                         while True:
                             scope = await ws.recv()
+
                             if scope == "ping":
                                 continue
+                            receive = MyReceive(ws)
                             print('получил данные')
                             r_scope = dill.loads(scope)
                             r_scope["current_websocket_connection"] = ws
                             try:
                                 # print("*-----------------")
-                                await app(r_scope, empty_receive, empty_send)
+                                await app(r_scope, receive, empty_send)
                             except RuntimeError as e:
                                 print("произошла ошибка в файле tunnel.py, в websocket_worker", e)
                     except asyncio.CancelledError:
@@ -86,6 +108,8 @@ def add_proxy(app: FastAPI) -> FastAPI:
 
     @app.middleware("http")
     async def add_process_time_header(request: Request, call_next):
+        print(request.__dict__)
+
         response = await call_next(request)
         # print("--**&6^^", response.__dict__)
         if request.scope.get("current_websocket_connection"):
