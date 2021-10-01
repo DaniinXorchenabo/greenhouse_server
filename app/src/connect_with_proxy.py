@@ -14,7 +14,7 @@ import websockets
 __all__ = ['add_proxy']
 
 url = os.environ.get("PROXY_URL", "ws://localhost:8000/tunnel/ws")
-ws_pool_size = 10
+ws_pool_size = 40
 
 
 def response_getstate_(self):
