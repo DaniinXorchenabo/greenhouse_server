@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import os
 
-from fastapi import Depends, APIRouter, HTTPException, Security, Form, Body
+from fastapi import Depends, APIRouter, HTTPException, Security, Form, Body, Request
 from fastapi.security import (
     OAuth2PasswordBearer,
     OAuth2PasswordRequestForm,
@@ -43,7 +43,8 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
 
 @app.post("/sign_up")
-async def registration(data: UserCreate = Body(...)):
+async def registration(request: Request, data: UserCreate = Body(...)):
+    # request.
     async with system_engine.transaction():
         res = await tab.system.User(**DbUser(**(data.dict() | {"scopes": [Scopes.user]})).dict()).save().run()
         return res

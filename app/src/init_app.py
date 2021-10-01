@@ -2,6 +2,7 @@ import asyncpg
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from piccolo.engine import engine_finder
+from tortoise import Tortoise
 
 from src.api.add_routers import add_routers_func
 from src.piccolo_db.piccolo_conf import guest_engine
@@ -36,7 +37,7 @@ def init_app_func(app: FastAPI):
                        admin_engine, developer_engine,
                        system_engine]
             [await engine.close_connection_pool() for engine in engines]
-
+            await Tortoise.close_connections()
         except Exception as e:
             print("----Unable to connect to the database, close_database_connection_pool", e)
 
