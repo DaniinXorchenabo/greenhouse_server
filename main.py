@@ -10,7 +10,6 @@ from fastapi.responses import PlainTextResponse, JSONResponse
 import dill
 from fastapi.middleware.cors import CORSMiddleware
 import websockets
-# uvicorn.
 import h11
 
 
@@ -42,6 +41,10 @@ websocket_control_app.add_middleware(
 )
 
 
+
+
+
+
 class ConnectionManager:
     ws_connections: list[Union[WebSocket, None]] = []
     free_ws_connection: dict[int, bool] = dict()
@@ -57,9 +60,9 @@ class ConnectionManager:
                 await asyncio.sleep(randint(1, 7))
                 if index in cls.free_ws_connection:
                     cls.free_ws_connection[index] = False
-                    print("pinging")
+                    # print("pinging")
                     await websocket.send_text("ping")
-                    print("pinged")
+                    # print("pinged")
                     cls.free_ws_connection[index] = True
                 else:
                     break
@@ -103,34 +106,42 @@ class ConnectionManager:
         cls.free_ws_connection[index] = True
 
     @classmethod
-    async def send_to_server(cls, scope) -> Response:
+    async def get_request_body(cls, receive_, current_websocket: WebSocket):
+        more_body = True
+
+        while more_body:
+            message = await receive_()
+            await current_websocket.send_bytes(dill.dumps(message, byref=True))
+            more_body = message.get('more_body', False)
+        await current_websocket.send_text("end")
+        return
+
+
+    @classmethod
+    async def send_to_server(cls, scope, receive) -> Response:
         response = JSONResponse({"type": "error", "details": "Не удаётся соединиться с реальным сервером"})
+        closed_connections = []
         if len(cls.free_ws_connection) != 0:
             while True:
                 try:
-                    for key, val in cls.free_ws_connection.items():
+                    for key, val in cls.free_ws_connection.copy().items():
+                        if cls.free_ws_connection.get(key, None) is not True:
+                            continue
                         print(f"key {key}, val {val}")
                         if val is True and len(cls.ws_connections) > key:
                             current_ws = cls.ws_connections[key]
                             try:
+                                response = (await cls._send_to_server(scope, key, current_ws, receive)) or response
+                                break
+                            except AssertionError as e:
+                                print("пришло сообщение на закрытие сокета")
                                 cls.free_ws_connection[key] = False
-                                await current_ws.send_bytes(scope)
-                                resp = await current_ws.receive()
-                                # print("! еще раз +++++++++++", resp)
-                                if resp.get('type'):
-                                    response: Response = dill.loads(resp['bytes'])
-                                    # print("----resp", response.__dict__)
-                                    del response.headers['content-length']
-                                    d = cls.get_body(current_ws)
-                                    response.body_iterator = d
-                                    break
-                                elif resp.get('type') == "websocket.disconnecte":
-                                    await cls.disconnect(current_ws)
-
+                                closed_connections.append(current_ws)
                             except websockets.exceptions.ConnectionClosedError as e:
                                 print("Сервер разорвал соединение. Будет использован другой websocket "
                                       "(ConnectionManager.send_to_server) :", e)
-                                await cls.disconnect(current_ws)
+                                cls.free_ws_connection[key] = False
+                                closed_connections.append(current_ws)
                     break
                 except RuntimeError as e:
                     # RuntimeError: dictionary changed size during iteration
@@ -139,7 +150,26 @@ class ConnectionManager:
                     print("Ошибка RuntimeError в ConnectionManager.send_to_server", e)
                     pass
 
+        await asyncio.gather(*closed_connections)
         return response
+
+    @classmethod
+    async def _send_to_server(cls, scope, key, current_ws, receive):
+
+
+
+        cls.free_ws_connection[key] = False
+        await current_ws.send_bytes(scope)
+        await cls.get_request_body(receive, current_ws)
+        resp = await current_ws.receive()
+        assert resp.get('type') != "websocket.disconnecte"
+        if resp.get('type') and "bytes" in resp:
+            print(resp)
+            response: Response = dill.loads(resp['bytes'])
+            del response.headers['content-length']
+            d = cls.get_body(current_ws)
+            response.body_iterator = d
+            return response
 
 
 @websocket_control_app.websocket("/tunnel/ws")
@@ -151,37 +181,35 @@ async def create_tunnel(websocket: WebSocket):
 
 
 async def app(scope, receive, send):
-    print(scope["type"])
+    # print(scope["type"])
     # print(*scope.items(), sep='\n')
     if scope["type"] in ["ws", "wss", "websocket"]:
         await websocket_control_app(scope, receive, send)
         return
 
-    print(receive)
-    print(send)
+    async def read_body(receive_):
+        """
+        Read and return the entire body from an incoming ASGI message.
+        """
+        body = b''
+        more_body = True
 
+        while more_body:
+            message = await receive_()
+            body += message.get('body', b'')
+            more_body = message.get('more_body', False)
+
+        return body
+
+
+    print("scope==================", *scope.items(), "--------", sep='\n')
+    print("receive==================", receive, "--------", sep='\n')
     _scope = dill.dumps(scope, byref=True)
     # _receive = dill.dumps({"receive": receive}, byref=True)
     # _send = dill.dumps({"send": send}, byref=True)
-    response: Response = await ConnectionManager.send_to_server(_scope)
+    response: Response = await ConnectionManager.send_to_server(_scope, receive)
 
     await response(scope, receive, send)
-
-
-# import uvicorn
-# from fastapi import FastAPI
-#
-# app = FastAPI()
-#
-#
-# @app.get("/")
-# def read_root():
-#     return {"Hello": "World"}
-#
-#
-# @app.get("/items/{item_id}")
-# def read_item(item_id: int):
-#     return {"item_id": item_id}
 
 
 if __name__ == "__main__":
