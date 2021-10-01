@@ -23,11 +23,11 @@ ALGORITHM = os.environ.get("TOKEN_ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
-def get_user(username: str) -> Awaitable[Optional[tab.system.User]]:
+def get_user(username: str):
     return (u := tab.system.User).objects().where(u.username == username).first().run()
 
 
-async def authenticate_user(username: str, password: str) -> Union[tab.system.User, Literal[False]]:
+async def authenticate_user(username: str, password: str):
     user = await get_user(username)
     if user is None:
         return False
@@ -39,7 +39,7 @@ async def authenticate_user(username: str, password: str) -> Union[tab.system.Us
 async def get_current_user(
         security_scopes: SecurityScopes,
         token: str = Depends(oauth2_scheme),
-) -> tab.system.User:
+):
     # создание ошибки авторизации
     if security_scopes.scopes:
         authenticate_value = f'Bearer scope="{security_scopes.scope_str}"'

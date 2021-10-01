@@ -2,6 +2,9 @@
 
 Сервер для умной теплицы
 
+[//]: < ([![Развертывание](https://button.deta.dev/1/svg)](https://go.deta.dev/deploy?repo=https://github.com/DaniinXorchenabo/greenhouse_server)) >
+
+
 ## Run
 
 ----
@@ -66,6 +69,12 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 5.) Check it: [https://localhost:8000](https://localhost:8000)
+
+# Build
+
+```
+docker-compose -f build-docker-compose.yml build
+```
 
 # Administration
 

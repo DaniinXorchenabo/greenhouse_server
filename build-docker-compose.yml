@@ -16,11 +16,9 @@ networks:
 services:
   db:
     image: postgres:13
-#    image: postgres:13
-#    command: postgres -c max_connections=300 -c shared_buffers=80MB
+    #    image: postgres:13
+    command: postgres -c max_connections=300 -c shared_buffers=80MB
     restart: always
-    env_file:
-      - .env
     environment:
       POSTGRES_DB: ${PGDATABASE}
       POSTGRES_USER: ${PG_SUPERUSER_NAME}
@@ -36,9 +34,21 @@ services:
       - '${PGPORT}'
 
   web:
-    image: daniinxorchenabo/gh_server
+    #    build:
+    #      context: app
+    #      dockerfile: old_python_env_Dockerfile
+    #      cache_from:
+    #        - python
+    #    image: daniinxorchenabo/gh_server
 
-#    container_name: daniinxorchenabo/gh_server:heroku
+    #    container_name: daniinxorchenabo/gh_server:heroku
+
+    build:
+      context: app
+      dockerfile: python_env_Dockerfile
+      cache_from:
+        - python
+    image: daniinxorchenabo/gh_server
 
     networks:
       - local_db
@@ -49,10 +59,9 @@ services:
       PGHOST: pgsql-server
     depends_on:
       - db
-    command: /bin/sh
 
     command: >
-      bash -c "cd ../..
+      bash -c "cd ../.. 
       && cd code/gh_server/app/src/piccolo_db
       && sleep 1
       && piccolo --diagnose
@@ -66,7 +75,6 @@ services:
 
     ports:
       - '${APP_PORT}:${APP_PORT}'
-
     volumes:
       - type: bind
         source: .
@@ -77,8 +85,6 @@ services:
     depends_on:
       - db
     restart: always
-    env_file:
-      - .env
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}

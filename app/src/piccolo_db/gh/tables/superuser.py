@@ -34,12 +34,12 @@ class Greenhouse(Table, tablename="greenhouse"):
 
 class UserGreenhouse(Table, tablename="user_greenhouse"):
     id = UUID(primary_key=True)
-    user = ForeignKey(references=LazyTableReference(
-        table_class_name="User", app_name="gh",
-    ), on_delete=OnDelete.cascade,
-        on_update=OnUpdate.cascade,
-        primary_key=False)
-    gh = ForeignKey(LazyTableReference(
-        table_class_name="Greenhouse", app_name="gh",
-    ), on_delete=OnDelete.cascade, on_update=OnUpdate.cascade,
-        primary_key=False)
+    # user = ForeignKey(references=LazyTableReference(
+    #     table_class_name="User", app_name="gh",
+    # ), on_delete=OnDelete.cascade,
+    #     on_update=OnUpdate.cascade,
+    #     primary_key=False)
+    # gh = ForeignKey(LazyTableReference(
+    #     table_class_name="Greenhouse", app_name="gh",
+    # ), on_delete=OnDelete.cascade, on_update=OnUpdate.cascade,
+    #     primary_key=False)

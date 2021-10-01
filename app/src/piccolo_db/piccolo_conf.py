@@ -26,15 +26,18 @@ from piccolo.conf.apps import AppRegistry
 
 os.environ.update({key.split("#")[0].replace(" ", ""): val.split("#")[0].replace(" ", "") for key, val in os.environ.items()})
 print("%%%%%-------------", os.environ.get("PG_SUPERUSER_NAME"), __name__)
-DB = PostgresEngine(
-    config={
-        "database": os.environ.get("PGDATABASE"),
-        "user": os.environ.get("PG_SUPERUSER_NAME"),
-        "password": os.environ.get("PG_SUPERUSER_PASSWORD"),
-        "host": os.environ.get("PGHOST"),
-        "port": os.environ.get("PGPORT"),
-    }
-)
+try:
+    DB = PostgresEngine(
+        config={
+            "database": os.environ.get("PGDATABASE"),
+            "user": os.environ.get("PG_SUPERUSER_NAME"),
+            "password": os.environ.get("PG_SUPERUSER_PASSWORD"),
+            "host": os.environ.get("PGHOST"),
+            "port": os.environ.get("PGPORT"),
+        }
+    )
+except Exception:
+    DB = PostgresEngine(os.environ.get("DATABASE_URL", ""))
 print("***%%%%%-------------", os.environ.get("PG_SUPERUSER_NAME"), __name__)
 try:
 
@@ -84,7 +87,7 @@ try:
         }
     )
 except Exception:
-    guest_engine = user_engine = admin_engine = developer_engine = system_engine = None
+    guest_engine = user_engine = admin_engine = developer_engine = system_engine = DB
 
 try:
     print("!!!!!!!!!!!_-_---------------------------")
