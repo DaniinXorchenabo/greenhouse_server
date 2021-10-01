@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+print("---")
+
 import os
 from os.path import dirname, join, split
 
@@ -28,43 +32,44 @@ print("**&&&&")
 # from src.db.gh.migrations
 
 
+config = {
+    'connections': {
+        # Dict format for connection
+        'default': {
+            'engine': 'tortoise.backends.asyncpg',
+            'credentials': {
+                "database": os.environ.get("PGDATABASE"),
+                "user": os.environ.get("PG_SUPERUSER_NAME"),
+                "password": os.environ.get("PG_SUPERUSER_PASSWORD"),
+                "host": os.environ.get("PGHOST"),
+                "port": os.environ.get("PGPORT"),
+            }
+        },
+    },
+    'apps': {
+        'gh': {
+            'models': ['__main__'],
+            # If no default_connection specified, defaults to 'default'
+            'default_connection': 'default',
+        },
+        "models": {
+            "models": ["src.db.gh.tables.real", "aerich.models"],
+            "default_connection": "default",
+        },
+    },
+    # "apps":
+    # },
+    # 'routers': ['path.router1', 'path.router2'],
+    'use_tz': False,
+    'timezone': 'UTC'
+}
+
+
 async def init():
     # Here we create a SQLite DB using file "db.sqlite3"
     #  also specify the app name of "models"
     #  which contain models from "app.models"
-    await Tortoise.init(
-        {
-            'connections': {
-                # Dict format for connection
-                'default': {
-                    'engine': 'tortoise.backends.asyncpg',
-                    'credentials': {
-                        "database": os.environ.get("PGDATABASE"),
-                        "user": os.environ.get("PG_SUPERUSER_NAME"),
-                        "password": os.environ.get("PG_SUPERUSER_PASSWORD"),
-                        "host": os.environ.get("PGHOST"),
-                        "port": os.environ.get("PGPORT"),
-                    }
-                },
-            },
-            'apps': {
-                'gh': {
-                    'models': ['__main__'],
-                    # If no default_connection specified, defaults to 'default'
-                    'default_connection': 'default',
-                },
-                "models": {
-                    "models": ["src.db.gh.tables.real", "aerich.models"],
-                    "default_connection": "default",
-                },
-            },
-            # "apps":
-            # },
-            # 'routers': ['path.router1', 'path.router2'],
-            'use_tz': False,
-            'timezone': 'UTC'
-        }
-    )
+    await Tortoise.init(config)
 
     # Generate the schema
     await Tortoise.generate_schemas()
