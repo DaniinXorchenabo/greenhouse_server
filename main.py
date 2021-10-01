@@ -41,10 +41,6 @@ websocket_control_app.add_middleware(
 )
 
 
-
-
-
-
 class ConnectionManager:
     ws_connections: list[Union[WebSocket, None]] = []
     free_ws_connection: dict[int, bool] = dict()
@@ -57,7 +53,7 @@ class ConnectionManager:
         cls.free_ws_connection[index] = True
         try:
             while True:
-                await asyncio.sleep(randint(1, 7))
+                await asyncio.sleep(randint(300, 2000)/100)
                 if index in cls.free_ws_connection:
                     cls.free_ws_connection[index] = False
                     # print("pinging")
@@ -116,10 +112,9 @@ class ConnectionManager:
         await current_websocket.send_text("end")
         return
 
-
     @classmethod
     async def send_to_server(cls, scope, receive) -> Response:
-        response = JSONResponse({"type": "error", "details": "Не удаётся соединиться с реальным сервером"})
+        default_response = response = JSONResponse({"type": "error", "details": "Не удаётся соединиться с реальным сервером"})
         closed_connections = []
         if len(cls.free_ws_connection) != 0:
             while True:
@@ -128,7 +123,7 @@ class ConnectionManager:
                         if cls.free_ws_connection.get(key, None) is not True:
                             continue
                         print(f"key {key}, val {val}")
-                        if val is True and len(cls.ws_connections) > key:
+                        if len(cls.ws_connections) > key:
                             current_ws = cls.ws_connections[key]
                             try:
                                 response = (await cls._send_to_server(scope, key, current_ws, receive)) or response
@@ -142,6 +137,10 @@ class ConnectionManager:
                                       "(ConnectionManager.send_to_server) :", e)
                                 cls.free_ws_connection[key] = False
                                 closed_connections.append(current_ws)
+                        else:
+                            print('длинна пула соединений меньше ключа')
+                    if response == default_response:
+                        print('цикл for ни разу на дошёл до работающего соединения')
                     break
                 except RuntimeError as e:
                     # RuntimeError: dictionary changed size during iteration
@@ -149,6 +148,8 @@ class ConnectionManager:
                     # Просто пробуем запустить еще раз
                     print("Ошибка RuntimeError в ConnectionManager.send_to_server", e)
                     pass
+        else:
+            print('пул соединений пуст')
 
         await asyncio.gather(*closed_connections)
         return response
