@@ -49,8 +49,6 @@ services:
       PGHOST: pgsql-server
     depends_on:
       - db
-    command: /bin/sh
-
     command: >
       bash -c "cd ../..
       && cd code/gh_server/app/src/piccolo_db
