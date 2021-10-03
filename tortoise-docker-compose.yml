@@ -25,7 +25,7 @@ services:
       POSTGRES_PASSWORD: ${PG_SUPERUSER_PASSWORD}
       PGDATA: /var/lib/postgresql/data
     volumes:
-      - postrges-db-data-t1:/var/lib/postgresql/data
+      - postrges-db-data-tortoise:/var/lib/postgresql/data
     networks:
       - local_db
     ports:
@@ -88,13 +88,13 @@ services:
     ports:
       - '${PGADMIN_PORT}:80'
     volumes:
-      - pgadmin-data-t1:/var/lib/pgadmin
+      - pgadmin-data-tortoise:/var/lib/pgadmin
     links:
       - "db:pgsql-server"
 
 volumes:
-  postrges-db-data-t1:
-  pgadmin-data-t1:
+  postrges-db-data-tortoise:
+  pgadmin-data-tortoise:
 
 
 

@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-print("---")
-
 import os
 from os.path import dirname, join, split
 
@@ -23,14 +19,11 @@ os.environ.update(
     {key.split("#")[0].replace(" ", ""): val.split("#")[0].replace(" ", "") for key, val in os.environ.items()})
 print("%%%%%-------------", os.environ.get("PG_SUPERUSER_NAME"), __name__)
 
+import copy
+
 from tortoise import Tortoise
 
 print("**&&&&")
-
-# from src.db.gh.tables.real import
-# from
-# from src.db.gh.migrations
-
 
 config = {
     'connections': {
@@ -48,21 +41,60 @@ config = {
     },
     'apps': {
         'gh': {
-            'models': ['__main__'],
+            'models': ["src.db.gh.tables.real", "aerich.models"],
             # If no default_connection specified, defaults to 'default'
             'default_connection': 'default',
         },
-        "models": {
-            "models": ["src.db.gh.tables.real", "aerich.models"],
-            "default_connection": "default",
-        },
+        # "models": {
+        #     "models": ["src.db.gh.tables.real", "aerich.models"],
+        #     "default_connection": "default",
+        # },
     },
-    # "apps":
-    # },
-    # 'routers': ['path.router1', 'path.router2'],
     'use_tz': False,
     'timezone': 'UTC'
 }
+migrate_config = copy.deepcopy(config)
+
+
+# system = {
+#     "database": os.environ.get("PGDATABASE"),
+#     "user": os.environ.get("PG_EDIT_DB_STRUCTURE_NAME"),
+#     "password": os.environ.get("PG_EDIT_DB_STRUCTURE_PASSWORD"),
+#     "host": os.environ.get("PGHOST"),
+#     "port": os.environ.get("PGPORT"),
+# }
+# developer = {
+#     "database": os.environ.get("PGDATABASE"),
+#     "user": os.environ.get("PG_DEVELOPER_NAME"),
+#     "password": os.environ.get("PG_DEVELOPER_PASSWORD"),
+#     "host": os.environ.get("PGHOST"),
+#     "port": os.environ.get("PGPORT"),
+# }
+# admin = {
+#     "database": os.environ.get("PGDATABASE"),
+#     "user": os.environ.get("PG_ADMIN_NAME"),
+#     "password": os.environ.get("PG_ADMIN_PASSWORD"),
+#     "host": os.environ.get("PGHOST"),
+#     "port": os.environ.get("PGPORT"),
+# }
+# user = {
+#     "database": os.environ.get("PGDATABASE"),
+#     "user": os.environ.get("PG_USER_NAME"),
+#     "password": os.environ.get("PG_USER_PASSWORD"),
+#     "host": os.environ.get("PGHOST"),
+#     "port": os.environ.get("PGPORT"),
+# }
+# guest = {
+#     "database": os.environ.get("PGDATABASE"),
+#     "user": os.environ.get("PG_GUEST_NAME"),
+#     "password": os.environ.get("PG_GUEST_PASSWORD"),
+#     "host": os.environ.get("PGHOST"),
+#     "port": os.environ.get("PGPORT"),
+# }
+# config['connections'] |= {key: {
+#     'engine': 'tortoise.backends.asyncpg',
+#     'credentials': val} for key, val in {'developer': developer, "admin": admin,
+#                                          "user": user, "guest": guest}.items()}
 
 
 async def init():
