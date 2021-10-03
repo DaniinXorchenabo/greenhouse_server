@@ -22,6 +22,8 @@ print("%%%%%-------------", os.environ.get("PG_SUPERUSER_NAME"), __name__)
 import copy
 
 from tortoise import Tortoise
+import psycopg2
+
 
 print("**&&&&")
 
@@ -54,46 +56,55 @@ config = {
 }
 migrate_config = copy.deepcopy(config)
 
+try:
+    system = {
+        "database": os.environ.get("PGDATABASE"),
+        "user": os.environ.get("PG_EDIT_DB_STRUCTURE_NAME"),
+        "password": os.environ.get("PG_EDIT_DB_STRUCTURE_PASSWORD"),
+        "host": os.environ.get("PGHOST"),
+        "port": os.environ.get("PGPORT"),
+    }
+    conn = psycopg2.connect(database=system["database"], user=system["user"],
+                            password=system["password"], host=system["host"],
+                            port=system["port"])
+    cursor = conn.cursor()
+    cursor.close()
+    conn.close()
 
-# system = {
-#     "database": os.environ.get("PGDATABASE"),
-#     "user": os.environ.get("PG_EDIT_DB_STRUCTURE_NAME"),
-#     "password": os.environ.get("PG_EDIT_DB_STRUCTURE_PASSWORD"),
-#     "host": os.environ.get("PGHOST"),
-#     "port": os.environ.get("PGPORT"),
-# }
-# developer = {
-#     "database": os.environ.get("PGDATABASE"),
-#     "user": os.environ.get("PG_DEVELOPER_NAME"),
-#     "password": os.environ.get("PG_DEVELOPER_PASSWORD"),
-#     "host": os.environ.get("PGHOST"),
-#     "port": os.environ.get("PGPORT"),
-# }
-# admin = {
-#     "database": os.environ.get("PGDATABASE"),
-#     "user": os.environ.get("PG_ADMIN_NAME"),
-#     "password": os.environ.get("PG_ADMIN_PASSWORD"),
-#     "host": os.environ.get("PGHOST"),
-#     "port": os.environ.get("PGPORT"),
-# }
-# user = {
-#     "database": os.environ.get("PGDATABASE"),
-#     "user": os.environ.get("PG_USER_NAME"),
-#     "password": os.environ.get("PG_USER_PASSWORD"),
-#     "host": os.environ.get("PGHOST"),
-#     "port": os.environ.get("PGPORT"),
-# }
-# guest = {
-#     "database": os.environ.get("PGDATABASE"),
-#     "user": os.environ.get("PG_GUEST_NAME"),
-#     "password": os.environ.get("PG_GUEST_PASSWORD"),
-#     "host": os.environ.get("PGHOST"),
-#     "port": os.environ.get("PGPORT"),
-# }
-# config['connections'] |= {key: {
-#     'engine': 'tortoise.backends.asyncpg',
-#     'credentials': val} for key, val in {'developer': developer, "admin": admin,
-#                                          "user": user, "guest": guest}.items()}
+    developer = {
+        "database": os.environ.get("PGDATABASE"),
+        "user": os.environ.get("PG_DEVELOPER_NAME"),
+        "password": os.environ.get("PG_DEVELOPER_PASSWORD"),
+        "host": os.environ.get("PGHOST"),
+        "port": os.environ.get("PGPORT"),
+    }
+    admin = {
+        "database": os.environ.get("PGDATABASE"),
+        "user": os.environ.get("PG_ADMIN_NAME"),
+        "password": os.environ.get("PG_ADMIN_PASSWORD"),
+        "host": os.environ.get("PGHOST"),
+        "port": os.environ.get("PGPORT"),
+    }
+    user = {
+        "database": os.environ.get("PGDATABASE"),
+        "user": os.environ.get("PG_USER_NAME"),
+        "password": os.environ.get("PG_USER_PASSWORD"),
+        "host": os.environ.get("PGHOST"),
+        "port": os.environ.get("PGPORT"),
+    }
+    guest = {
+        "database": os.environ.get("PGDATABASE"),
+        "user": os.environ.get("PG_GUEST_NAME"),
+        "password": os.environ.get("PG_GUEST_PASSWORD"),
+        "host": os.environ.get("PGHOST"),
+        "port": os.environ.get("PGPORT"),
+    }
+    config['connections'] |= {key: {
+        'engine': 'tortoise.backends.asyncpg',
+        'credentials': val} for key, val in {'developer': developer, "admin": admin,
+                                             "user": user, "guest": guest}.items()}
+except psycopg2.OperationalError:
+    pass
 
 
 async def init():

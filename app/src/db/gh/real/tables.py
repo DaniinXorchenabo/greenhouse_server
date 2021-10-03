@@ -23,7 +23,7 @@ class User(Model, ScopeField):
     name = CharField(100, null=True)
     surname = CharField(100, null=True)
     hashed_password = CharField(4096, null=False)
-    email = CharField(100, unique=True)
+    email = CharField(101, unique=True)
     gh_user: ReverseRelation["GhUser"]
 
     def __str__(self):
