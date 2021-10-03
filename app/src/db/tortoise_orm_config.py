@@ -40,9 +40,8 @@ config = {
         },
     },
     'apps': {
-        'gh': {
-            'models': ["src.db.gh.tables.real", "aerich.models"],
-            # If no default_connection specified, defaults to 'default'
+        'gh_real': {
+            'models': ["src.db.gh.real.tables", "aerich.models"],
             'default_connection': 'default',
         },
         # "models": {

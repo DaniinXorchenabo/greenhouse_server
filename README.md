@@ -132,6 +132,26 @@ Or, You can use /redoc [http://localhost:8040/redoc](http://localhost:8040/redoc
 
 It was genereted by fast-api framework too
 
+# MIgrations
+
+
+## Create migration system
+
+``` 
+cd project_dir/app
+aerich init -t src.db.tortoise_orm_config.migrate_config --location src/db/_migrations
+aerich init-db
+aerich upgrade
+```
+
+Create tables and run generating migration command:
+``` 
+aerich migrate --name migration_name
+```
+And run this migration
+``` 
+aerich upgrade
+```
 
 
 
