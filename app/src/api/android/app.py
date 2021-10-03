@@ -15,10 +15,11 @@ app = APIRouter(prefix="/user", dependencies=[Depends(user)])
 
 @app.get('/get_greenhouses')
 async def get_greenhouses(me: Tab = Depends(user)):
+    return {"d":  me.t.UserGreenhouse.object()}
 
-    return {"d" : await models.Greenhouse.raw("SELECT greenhouse.* FROM greenhouse_user  "
-                                 "LEFT JOIN greenhouse ON  greenhouse_user.gh = greenhouse.id"
-                                 "WHERE greenhouse_user.user = {}", me.u.id).run()}
+    # return {"d" : await models.Greenhouse.raw("SELECT greenhouse.* FROM greenhouse_user  "
+    #                              "LEFT JOIN greenhouse ON  greenhouse_user.gh = greenhouse.id"
+    #                              "WHERE greenhouse_user.user = {}", me.u.id).run()}
 
 
 @app.websocket("/greenhouse/{greenhouse_id}")

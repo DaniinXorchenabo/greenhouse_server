@@ -29,6 +29,8 @@ class Greenhouse(Table, tablename="greenhouse"):
 
 class UserGreenhouse(Table, tablename="user_greenhouse"):
     id = UUID(primary_key=True)
+    user = ForeignKey(references="User", null=False)
+
     # user = ForeignKey(references=LazyTableReference(
     #     table_class_name="User", app_name="gh",
     #     module_path="src.piccolo_db.gh.tables.superuser",
