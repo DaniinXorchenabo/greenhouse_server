@@ -12,3 +12,4 @@ dill
 httpx
 tortoise-orm[asyncpg]
 aerich
+psycopg2

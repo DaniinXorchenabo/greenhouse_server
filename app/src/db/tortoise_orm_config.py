@@ -29,7 +29,6 @@ print("**&&&&")
 
 config = {
     'connections': {
-        # Dict format for connection
         'default': {
             'engine': 'tortoise.backends.asyncpg',
             'credentials': {
@@ -103,6 +102,29 @@ try:
         'engine': 'tortoise.backends.asyncpg',
         'credentials': val} for key, val in {'developer': developer, "admin": admin,
                                              "user": user, "guest": guest}.items()}
+    config["apps"] |= {
+        'gh_guest': {
+            'models': ["src.db.gh.guest.tables", "aerich.models"],
+            'default_connection': 'default',
+        },
+        'gh_user': {
+            'models': ["src.db.gh.user.tables", "aerich.models"],
+            'default_connection': 'default',
+        },
+        'gh_admin': {
+            'models': ["src.db.gh.admin.tables", "aerich.models"],
+            'default_connection': 'default',
+        },
+        'gh_developer': {
+            'models': ["src.db.gh.developer.tables", "aerich.models"],
+            'default_connection': 'default',
+        },
+        'gh_system': {
+            'models': ["src.db.gh.system.tables", "aerich.models"],
+            'default_connection': 'default',
+        },
+    }
+
 except psycopg2.OperationalError:
     pass
 
