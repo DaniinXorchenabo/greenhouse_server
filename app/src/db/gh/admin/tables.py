@@ -1,7 +1,6 @@
-from tortoise.models import Model as TortoiseBaseModel
 from tortoise.fields import UUIDField, CharField, ForeignKeyField, ReverseRelation
 from tortoise.transactions import get_connection
-from src.db.gh.utils.mixins import ScopeField
+from src.db.gh.utils.mixins import ScopeField, Model as TortoiseBaseModel
 
 
 class Model(TortoiseBaseModel):
@@ -14,7 +13,7 @@ class Model(TortoiseBaseModel):
         :param for_write: Whether this query for write.
         :return: BaseDBAsyncClient:
         """
-        return get_connection("default")
+        return cls.is_transaction or get_connection("default")
 
 
 class User(Model, ScopeField):
