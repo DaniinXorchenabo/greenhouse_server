@@ -1,10 +1,27 @@
 from enum import Enum
-from typing import Union
+from typing import Union, Optional
 
-from tortoise.models import Model
 from tortoise.fields import UUIDField, CharField, TextField
+from tortoise.transactions import get_connection
+from tortoise.backends.base.client import BaseDBAsyncClient
 
 from src.utils.enums import Scopes
+
+from tortoise.models import Model as TortoiseBaseModel
+
+
+class Model(TortoiseBaseModel):
+    is_transaction: Optional[BaseDBAsyncClient] = None
+
+    @classmethod
+    def _choose_db(cls, for_write: bool = False):
+        """
+        Return the connection that will be used if this query is executed now.
+
+        :param for_write: Whether this query for write.
+        :return: BaseDBAsyncClient:
+        """
+        return cls.is_transaction or get_connection("default")
 
 
 class ScopeField(Model):
@@ -21,3 +38,4 @@ class ScopeField(Model):
 
     class Meta:
         abstract = True
+
