@@ -7,7 +7,8 @@ from fastapi.security import SecurityScopes
 from pydantic import ValidationError
 
 from src.utils.security import verify_password
-from src.piccolo_db.gh import tables as tab
+# from src.piccolo_db.gh import tables as tab
+from src import db as t
 from src.api.security.config import oauth2_scheme
 from src.api.security.schemes import TokenData
 
@@ -24,7 +25,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 def get_user(username: str):
-    return (u := tab.system.User).objects().where(u.username == username).first().run()
+    return (u := t.system_t.User).objects().where(u.username == username).first().run()
 
 
 async def authenticate_user(username: str, password: str):

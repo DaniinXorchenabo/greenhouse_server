@@ -13,9 +13,11 @@ from src.api.security.schemes import Token, User
 from src.api.security.get_user import authenticate_user, get_current_user
 from src.api.security.utils import create_access_token
 from src.api.security.config import TOKEN_URL
-from src.piccolo_db.gh.schemes.system import UserCreate, DbUser
-from src.piccolo_db.piccolo_conf import system_engine
-from src.piccolo_db.gh import tables as tab
+# from src.piccolo_db.gh.schemes.system import UserCreate, DbUser
+# from src.piccolo_db.piccolo_conf import system_engine
+# from src.piccolo_db.gh import tables as tab
+from src import db as t
+
 from src.utils.enums import Scopes
 
 __all__ = ["app"]
@@ -44,7 +46,5 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
 @app.post("/sign_up")
 async def registration(request: Request, data: UserCreate = Body(...)):
-    # request.
-    async with system_engine.transaction():
-        res = await tab.system.User(**DbUser(**(data.dict() | {"scopes": [Scopes.user]})).dict()).save().run()
+        res = await t.system_t.User(**DbUser(**(data.dict() | {"scopes": [Scopes.user]})).dict()).save().run()
         return res

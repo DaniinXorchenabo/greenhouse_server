@@ -128,7 +128,7 @@ try:
 except psycopg2.OperationalError:
     pass
 
-
+print("&&&**----------")
 async def init():
     # Here we create a SQLite DB using file "db.sqlite3"
     #  also specify the app name of "models"
