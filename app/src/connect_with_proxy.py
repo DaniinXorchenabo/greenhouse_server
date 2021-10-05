@@ -111,6 +111,10 @@ def add_proxy(app: FastAPI) -> FastAPI:
         print(request.__dict__)
 
         response = await call_next(request)
+
+        if response.type == "http" and response.method == "OPTIONS":
+            response.headers["Access-Control-Allow-Origin"] = "*"
+
         # print("--**&6^^", response.__dict__)
         if request.scope.get("current_websocket_connection"):
             resp_body = response.body_iterator
