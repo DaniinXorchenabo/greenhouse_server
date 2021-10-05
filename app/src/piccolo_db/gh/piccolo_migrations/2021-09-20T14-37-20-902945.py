@@ -83,7 +83,7 @@ async def forwards():
     manager.add_column(
         table_class_name="UserGreenhouse",
         tablename="user_greenhouse",
-        column_name="user",
+        column_name="user_id",
         column_class_name="ForeignKey",
         column_class=ForeignKey,
         params={
@@ -102,7 +102,7 @@ async def forwards():
     manager.add_column(
         table_class_name="UserGreenhouse",
         tablename="user_greenhouse",
-        column_name="gh",
+        column_name="gh_id",
         column_class_name="ForeignKey",
         column_class=ForeignKey,
         params={

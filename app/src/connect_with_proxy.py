@@ -50,6 +50,13 @@ class MyReceive:
         print('часть тела:', obj, [obj], type(obj))
         return obj
 
+class MyBoolReceive:
+    def __init__(self, current_websocket):
+        self.current_websocket = current_websocket
+
+    async def __call__(self):
+        return b''
+
 
 async def send_body(body, websocket):
     async for i in body:
@@ -71,12 +78,25 @@ def add_proxy(app: FastAPI) -> FastAPI:
 
                             if scope == "ping":
                                 continue
-                            receive = MyReceive(ws)
-                            print('получил данные')
-                            r_scope = dill.loads(scope)
-                            r_scope["current_websocket_connection"] = ws
+                            if scope == 'end':
+                                receive = MyBoolReceive(ws)
+                                print('получил данные', scope)
+                                r_scope = scope
+                                continue
+                            else:
+                                receive = MyReceive(ws)
+                                print('получил данные', scope)
+                                r_scope = dill.loads(scope)
+                                r_scope["current_websocket_connection"] = ws
+
+                            # except TypeError as e:
+                            #     print("ошибка при декодировании данных в websocket_worker", e)
+
                             try:
-                                # print("*-----------------")
+                                print("*-----------------", r_scope)
+                                if r_scope.get("type") == "http.request":
+                                    r_scope['type'] = "http"
+                                    continue
                                 await app(r_scope, receive, empty_send)
                             except RuntimeError as e:
                                 print("произошла ошибка в файле tunnel.py, в websocket_worker", e)
@@ -106,8 +126,6 @@ def add_proxy(app: FastAPI) -> FastAPI:
                 print('соединение с вебсокетом закрыто')
             except asyncio.CancelledError:
                 print("Ошибка при закрытии корутины работника вебсокета")
-                
-               
 
     app.add_middleware(
         CORSMiddleware,
@@ -119,19 +137,21 @@ def add_proxy(app: FastAPI) -> FastAPI:
     
     @app.middleware("http")
     async def add_process_time_header(request: Request, call_next):
-        print(request.__dict__)
+        print("#@1-------",  request.__dict__)
 
-        response = await call_next(request)
-
-        if response.type == "http" and response.method == "OPTIONS":
+        response: Response = await call_next(request)
+        print("$$###0***", response)
+        if request.scope["type"] == "http" and request.scope["method"] == "OPTIONS":
             response.headers["Access-Control-Allow-Origin"] = "*"
 
         # print("--**&6^^", response.__dict__)
+        print('проверяю на websocket наличие')
         if request.scope.get("current_websocket_connection"):
             resp_body = response.body_iterator
             resp = dill.dumps(response, byref=True)
-
+            print('всё ок, ответ упакован')
             await request.scope.get("current_websocket_connection").send(resp)
+            print('отправил заголовки')
             await send_body(resp_body, request.scope.get("current_websocket_connection"))
             await request.scope.get("current_websocket_connection").send("end")
             # print([resp])

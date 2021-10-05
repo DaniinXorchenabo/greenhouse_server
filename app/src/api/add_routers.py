@@ -24,14 +24,14 @@ def add_routers_func(app: FastAPI):
 
     app.routes.extend([
         Route("/", HomeEndpoint),
-        Mount(
-            "/piccolo_admin/",
-            create_admin(
-                tables=APP_CONFIG.table_classes,
-                # Required when running under HTTPS:
-                # allowed_hosts=['my_site.com']
-            ),
-        ),
+        # Mount(
+        #     "/piccolo_admin/",
+        #     create_admin(
+        #         tables=APP_CONFIG.table_classes,
+        #         # Required when running under HTTPS:
+        #         # allowed_hosts=['my_site.com']
+        #     ),
+        # ),
         Mount("/static/", StaticFiles(directory=join(dirname(__file__), "piccolo_test_app", "static"))),
 
     ])
