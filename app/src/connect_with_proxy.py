@@ -10,6 +10,7 @@ import dill
 from random import randint
 
 import websockets
+from fastapi.middleware.cors import CORSMiddleware
 
 __all__ = ['add_proxy']
 
@@ -105,12 +106,26 @@ def add_proxy(app: FastAPI) -> FastAPI:
                 print('соединение с вебсокетом закрыто')
             except asyncio.CancelledError:
                 print("Ошибка при закрытии корутины работника вебсокета")
+                
+               
 
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=['*'],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+    
     @app.middleware("http")
     async def add_process_time_header(request: Request, call_next):
         print(request.__dict__)
 
         response = await call_next(request)
+
+        if response.type == "http" and response.method == "OPTIONS":
+            response.headers["Access-Control-Allow-Origin"] = "*"
+
         # print("--**&6^^", response.__dict__)
         if request.scope.get("current_websocket_connection"):
             resp_body = response.body_iterator
