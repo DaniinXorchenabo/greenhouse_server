@@ -31,14 +31,14 @@ origins = [
     "http://localhost:8010",
 ]
 
-websocket_control_app.add_middleware(
-    CORSMiddleware,
-    allow_origins=['*'],
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-    expose_headers=['*']
-)
+# websocket_control_app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=['*'],
+#     allow_credentials=False,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+#     expose_headers=['*']
+# )
 
 
 class ConnectionManager:
