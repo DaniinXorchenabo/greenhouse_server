@@ -9,6 +9,7 @@ from pydantic import ValidationError
 from src.utils.security import verify_password
 # from src.piccolo_db.gh import tables as tab
 from src import db as t
+from src.db.gh.system.schemes import AuthUser
 from src.api.security.config import oauth2_scheme
 from src.api.security.schemes import TokenData
 
@@ -24,14 +25,15 @@ ALGORITHM = os.environ.get("TOKEN_ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
-def get_user(username: str):
-    return (u := t.system_t.User).objects().where(u.username == username).first().run()
+def get_user(username: str) -> Awaitable:
+    return t.system_t.User.get_or_none(username=username)
 
 
-async def authenticate_user(username: str, password: str):
+async def authenticate_user(username: str, password: str) -> AuthUser:
     user = await get_user(username)
     if user is None:
         return False
+    user = AuthUser.from_tortoise_orm(user)
     if not verify_password(password, user.hashed_password):
         return False
     return user
@@ -65,7 +67,7 @@ async def get_current_user(
     user = await get_user(username=token_data.username)
     if user is None:
         raise credentials_exception
-
+    user = AuthUser.from_tortoise_orm(user)
     # Хватает ли разрешений на доступ к этому роуту
     token_data.scopes &= set(user.scopes)
     for scope in security_scopes.scopes:

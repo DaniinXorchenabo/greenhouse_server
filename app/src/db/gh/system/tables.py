@@ -1,16 +1,22 @@
 from tortoise.fields import UUIDField, CharField, ForeignKeyField, ReverseRelation
 from tortoise.transactions import get_connection
+from tortoise.models import MetaInfo
+from tortoise.models import Model as StandartTortoiseBaseModel
+
 from src.db.gh.utils.mixins import ScopeField, Model as TortoiseBaseModel
 
+Model = StandartTortoiseBaseModel
+# class Model(StandartTortoiseBaseModel):
+#     pass
+    # _meta = MetaInfo(None)
+    # StandartTortoiseBaseModel._meta.default_connection = "default"
 
-class Model(TortoiseBaseModel):
-
-    @classmethod
-    def _choose_db(cls, for_write: bool = False):
-        return cls.is_transaction or get_connection("default")
+    # @classmethod
+    # def _choose_db(cls, for_write: bool = False):
+    #     return cls.is_transaction or get_connection("default")
 
 
-class User(Model, ScopeField):
+class User(ScopeField, Model):
     id = UUIDField(pk=True)
     username = CharField(50, unique=True, null=False)
     name = CharField(100, null=True)
@@ -22,6 +28,8 @@ class User(Model, ScopeField):
     def __str__(self):
         return self.id
 
+
+User._meta.default_connection = "default"
 
 class Greenhouse(Model):
     id = UUIDField(pk=True)

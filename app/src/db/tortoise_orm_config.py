@@ -1,6 +1,8 @@
 import os
 from os.path import dirname, join, split
 
+
+
 if os.environ.get("PG_SUPERUSER_NAME") is None:
     from dotenv import load_dotenv
 
@@ -129,11 +131,11 @@ except psycopg2.OperationalError:
     pass
 
 print("&&&**----------")
-async def init():
+async def tortoise_init():
     # Here we create a SQLite DB using file "db.sqlite3"
     #  also specify the app name of "models"
     #  which contain models from "app.models"
     await Tortoise.init(config)
 
     # Generate the schema
-    await Tortoise.generate_schemas()
+    # await Tortoise.generate_schemas()

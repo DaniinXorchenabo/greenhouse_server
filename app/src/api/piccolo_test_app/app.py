@@ -1,7 +1,13 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-from src.piccolo_db.gh.tables.guest import User
+
+import tortoise.models
+from src import db as t
 # from src.piccolo_db.gh.tables.superuser import Task
+from src.db.gh.system.schemes import UserQuery
+from src.api.security.check_roles import system_transaction
+from src import db as t
+
 
 __all__ = ["app"]
 
@@ -16,8 +22,14 @@ async def tasks():
 
 
 @app.get("/test_get")
-async def test_db():
-    return await User.select().run()
+async def test_db(conn = Depends(system_transaction)):
+    print(tortoise.models.current_transaction_map)
+    # User_Pydantic.from_queryset(Users.all())
+    return await UserQuery.from_queryset(
+         t.system_t.User.filter()
+    )
+
+
 
 
 @app.get("/test_create")
