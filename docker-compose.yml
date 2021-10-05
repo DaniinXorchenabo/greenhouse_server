@@ -17,7 +17,7 @@ services:
   db:
     image: postgres:13
 #    image: postgres:13
-#    command: postgres -c max_connections=300 -c shared_buffers=80MB
+    command: postgres -c max_connections=300 -c shared_buffers=80MB
     restart: always
     env_file:
       - .env
