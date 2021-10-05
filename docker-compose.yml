@@ -49,7 +49,7 @@ services:
       PGHOST: pgsql-server
     depends_on:
       - db
-    command: /bin/sh
+#    command: /bin/sh
 
     command: >
       bash -c "cd ../..
