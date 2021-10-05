@@ -29,7 +29,9 @@ class Greenhouse(Table, tablename="greenhouse"):
 
 class UserGreenhouse(Table, tablename="user_greenhouse"):
     id = UUID(primary_key=True)
-    user = ForeignKey(references="User", null=False)
+    user_id = ForeignKey(references="User", null=False)
+    gh_id = ForeignKey(references="Greenhouse", null=False)
+
 
     # user = ForeignKey(references=LazyTableReference(
     #     table_class_name="User", app_name="gh",
