@@ -15,8 +15,10 @@ app = APIRouter(prefix="/user", dependencies=[Depends(user)])
 
 @app.get('/get_greenhouses')
 async def get_greenhouses(me: Tab = Depends(user)):
-    return {"d":  me.t.UserGreenhouse.object()}
-
+    print("^%$$$$$$$$$---------", me)
+    return {"d":  [await i.get_related(me.t.UserGreenhouse.gh_id).run()
+                   for i in await me.t.UserGreenhouse.objects().where(me.t.UserGreenhouse.user_id == me.u.id)]}
+#.where(me.t.UserGreenhouse.user_id == me.u.id)
     # return {"d" : await models.Greenhouse.raw("SELECT greenhouse.* FROM greenhouse_user  "
     #                              "LEFT JOIN greenhouse ON  greenhouse_user.gh = greenhouse.id"
     #                              "WHERE greenhouse_user.user = {}", me.u.id).run()}
