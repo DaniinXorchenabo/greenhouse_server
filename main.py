@@ -104,16 +104,19 @@ class ConnectionManager:
     @classmethod
     async def get_request_body(cls, receive_, current_websocket: WebSocket):
         more_body = True
-
+        message = None
         while more_body:
             message = await receive_()
             await current_websocket.send_bytes(dill.dumps(message, byref=True))
             more_body = message.get('more_body', False)
+        if more_body is False and message is not None:
+            await current_websocket.send_bytes(dill.dumps(message, byref=True))
         await current_websocket.send_text("end")
         return
 
     @classmethod
     async def send_to_server(cls, scope, receive) -> Response:
+        print("0***********send_to_server")
         default_response = response = JSONResponse({"type": "error", "details": "Не удаётся соединиться с реальным сервером"})
         closed_connections = []
         if len(cls.free_ws_connection) != 0:
@@ -157,15 +160,18 @@ class ConnectionManager:
     @classmethod
     async def _send_to_server(cls, scope, key, current_ws, receive):
 
-
+        print('@@@@@@@----')
 
         cls.free_ws_connection[key] = False
         await current_ws.send_bytes(scope)
+        print("data was sending")
         await cls.get_request_body(receive, current_ws)
+        print('got request body...')
         resp = await current_ws.receive()
+        print('get response!!!', resp)
         assert resp.get('type') != "websocket.disconnecte"
         if resp.get('type') and "bytes" in resp:
-            print(resp)
+            print("resp in _send_to_server", resp)
             response: Response = dill.loads(resp['bytes'])
             del response.headers['content-length']
             d = cls.get_body(current_ws)
@@ -206,9 +212,11 @@ async def app(scope, receive, send):
     print("scope==================", *scope.items(), "--------", sep='\n')
     print("receive==================", receive, "--------", sep='\n')
     _scope = dill.dumps(scope, byref=True)
+    print("$###########---", _scope)
     # _receive = dill.dumps({"receive": receive}, byref=True)
     # _send = dill.dumps({"send": send}, byref=True)
     response: Response = await ConnectionManager.send_to_server(_scope, receive)
+    print(", ^^^^^^^^^^^^", response)
 
     await response(scope, receive, send)
 
