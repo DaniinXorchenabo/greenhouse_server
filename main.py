@@ -25,12 +25,6 @@ Response.__getstate__ = PickleResponse.__getstate__
 websocket_control_app = FastAPI()
 
 
-origins = [
-    "http://localhost",
-    "http://localhost:8000",
-    "http://localhost:8010",
-]
-
 websocket_control_app.add_middleware(
     CORSMiddleware,
     allow_origins=['*'],
