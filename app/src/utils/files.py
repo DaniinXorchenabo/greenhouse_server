@@ -1,5 +1,5 @@
+import os
 def check_environment_params_loaded():
-    import os
     if os.environ.get("ENVIRONMENT_IS_LOADED", 'false') != 'true':
 
         from dotenv import load_dotenv
