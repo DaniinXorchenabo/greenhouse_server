@@ -1,15 +1,14 @@
 import os
+from uuid import uuid4
 
 from sqlalchemy.engine.url import URL
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm.decl_api import DeclarativeMeta
 from sqlalchemy.ext.asyncio import AsyncEngine
 
-import asyncio
-
 from sqlalchemy.ext.asyncio import create_async_engine
-
 
 from src.sqlalchemy.db.before_connect.connect_utils import base_connect_dict
 from src.utils.files import check_environment_params_loaded
@@ -37,7 +36,7 @@ class User(BaseOfRealDB):
     __tablename__ = 'user_'
     # __bind_key__ = "real"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
 
     def __repr__(self):
         return "".format(self.id)
