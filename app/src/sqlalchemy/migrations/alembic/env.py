@@ -2,6 +2,7 @@ import asyncio
 import os
 from logging.config import fileConfig
 
+import asyncpg
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import AsyncEngine
@@ -30,6 +31,7 @@ fileConfig(config.config_file_name)
 # target_metadata = mymodel.Base.metadata
 
 from src.sqlalchemy.db.tables._real import BaseOfRealDB
+from src.sqlalchemy.db.before_connect.connect_utils import migration_engine_config
 
 target_metadata = BaseOfRealDB.metadata
 
@@ -53,7 +55,8 @@ def run_migrations_offline():
 
     """
     check_environment_params_loaded()
-    url = URL(**real_engine_config)
+    # url = URL(**real_engine_config)
+    url = URL(**migration_engine_config)
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -89,10 +92,17 @@ async def run_migrations_online():
     # )
     # url = get_migration_url()
 
-    url = URL(**real_engine_config)
-    connectable: AsyncEngine = AsyncEngine(create_engine(url, **{"poolclass": pool.NullPool, "future": True, }))
-    async with connectable.connect() as connection:
-        await connection.run_sync(do_run_migrations)
+    # url = URL(**real_engine_config)
+    try:
+        url = URL(**migration_engine_config)
+        connectable: AsyncEngine = AsyncEngine(create_engine(url, **{"poolclass": pool.NullPool, "future": True, }))
+        async with connectable.connect() as connection:
+            await connection.run_sync(do_run_migrations)
+    except asyncpg.exceptions.InvalidPasswordError:
+        url = URL(**real_engine_config)
+        connectable: AsyncEngine = AsyncEngine(create_engine(url, **{"poolclass": pool.NullPool, "future": True, }))
+        async with connectable.connect() as connection:
+            await connection.run_sync(do_run_migrations)
 
 
 if context.is_offline_mode():
