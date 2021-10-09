@@ -24,7 +24,10 @@ def upgrade():
                     TO {os.environ.get('PG_MIGRATION_ROLE_NAME')};""")
     op.execute(f"""GRANT USAGE, CREATE ON SCHEMA public TO {os.environ.get('PG_MIGRATION_ROLE_NAME')};""")
     op.execute(f"""ALTER DEFAULT PRIVILEGES IN SCHEMA public
-                    GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO {os.environ.get('PG_MIGRATION_ROLE_NAME')};""")
+                    GRANT SELECT, INSERT, UPDATE, DELETE ON  TABLES TO {os.environ.get('PG_MIGRATION_ROLE_NAME')};""")
+    op.execute(f"""GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES 
+                IN SCHEMA public TO {os.environ.get('PG_MIGRATION_ROLE_NAME')};""")
+
 
     # =======! Суперпользователь, инициализированный при создании БД !=======
     [op.execute(f"""ALTER USER {os.environ.get('PG_SUPERUSER_NAME')} WITH {i}""")
@@ -33,7 +36,9 @@ def upgrade():
                     TO {os.environ.get('PG_SUPERUSER_NAME')};""")
     op.execute(f"""GRANT USAGE, CREATE ON SCHEMA public TO {os.environ.get('PG_SUPERUSER_NAME')};""")
     op.execute(f"""ALTER DEFAULT PRIVILEGES IN SCHEMA public
-                    GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO {os.environ.get('PG_SUPERUSER_NAME')};""")
+                    GRANT SELECT, INSERT, UPDATE, DELETE ON  TABLES TO {os.environ.get('PG_SUPERUSER_NAME')};""")
+    op.execute(f"""GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES 
+                IN SCHEMA public TO {os.environ.get('PG_SUPERUSER_NAME')};""")
 
     # =======! удаление прав для PUBLIC роли !=======
     op.execute("""REVOKE CREATE ON SCHEMA public FROM PUBLIC;""")
