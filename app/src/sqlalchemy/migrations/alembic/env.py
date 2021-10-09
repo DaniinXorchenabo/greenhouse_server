@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 from sqlalchemy.engine.create import create_engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.ext.asyncio import create_async_engine
+import sqlalchemy
 
 from alembic import context
 
@@ -56,16 +57,28 @@ def run_migrations_offline():
     """
     check_environment_params_loaded()
     # url = URL(**real_engine_config)
-    url = URL(**migration_engine_config)
-    context.configure(
-        url=url,
-        target_metadata=target_metadata,
-        literal_binds=True,
-        dialect_opts={"paramstyle": "named"},
-    )
+    try:
+        url = URL(**migration_engine_config)
+        context.configure(
+            url=url,
+            target_metadata=target_metadata,
+            literal_binds=True,
+            dialect_opts={"paramstyle": "named"},
+        )
 
-    with context.begin_transaction():
-        context.run_migrations()
+        with context.begin_transaction():
+            context.run_migrations()
+    except (asyncpg.exceptions.InvalidPasswordError, sqlalchemy.exc.ProgrammingError):
+        url = URL(**real_engine_config)
+        context.configure(
+            url=url,
+            target_metadata=target_metadata,
+            literal_binds=True,
+            dialect_opts={"paramstyle": "named"},
+        )
+
+        with context.begin_transaction():
+            context.run_migrations()
 
 
 def do_run_migrations(connection):
@@ -98,7 +111,7 @@ async def run_migrations_online():
         connectable: AsyncEngine = AsyncEngine(create_engine(url, **{"poolclass": pool.NullPool, "future": True, }))
         async with connectable.connect() as connection:
             await connection.run_sync(do_run_migrations)
-    except asyncpg.exceptions.InvalidPasswordError:
+    except (asyncpg.exceptions.InvalidPasswordError, sqlalchemy.exc.ProgrammingError):
         url = URL(**real_engine_config)
         connectable: AsyncEngine = AsyncEngine(create_engine(url, **{"poolclass": pool.NullPool, "future": True, }))
         async with connectable.connect() as connection:
