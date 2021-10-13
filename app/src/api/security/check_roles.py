@@ -1,4 +1,9 @@
+from typing import AsyncIterator, Type
 from fastapi import FastAPI, Depends, Security
+from types import ModuleType
+from typing import Literal
+
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.piccolo_db.gh import tables as tab
 from src.piccolo_db.piccolo_conf import guest_engine
@@ -10,6 +15,15 @@ from src.utils.enums import Scopes
 from src.api.security.get_user import get_current_user
 from src.api.security.schemes import Tab
 
+from src.piccolo_db.gh.tables import guest as test_guest
+from src.sqlalchemy.db.tables import _real as _t_real, guest as t_guest
+from src.sqlalchemy.db.tables import user as t_user, admin as t_admin
+from src.sqlalchemy.db.tables import developer as t_developer, system as t_system
+from src.sqlalchemy.db.connections import _real_connection, guest_connection, user_connection
+from src.sqlalchemy.db.connections import admin_connection, developer_connection, system_connection
+from src.sqlalchemy.db.tables import TypeReal, TypeGuest, TypeUser, TypeAdmin, TypeDeveloper, TypeSystem
+
+from src.sqlalchemy.db import GuestBox, UserBox, AdminBox, DeveloperBox, SystemBox, _RealBox
 
 __all__ = [
     "guest",
@@ -17,66 +31,28 @@ __all__ = [
     "admin",
     "developer",
     "system",
-    "guest_transaction",
-    "user_transaction",
-    "admin_transaction",
-    "developer_transaction",
-    "system_transaction",
 ]
 
 
-async def get_db():
-    async with guest_engine.transaction():
-        print("до транзакции")
-        yield tab.guest
-        print("после транзакции")
+def guest(session: AsyncSession = Depends(guest_connection)) -> GuestBox:
+    return GuestBox(s=session)
 
 
-async def guest_transaction():
-    async with guest_engine.transaction():
-        yield tab.guest
+def user(current_user: AsyncSession = Security(get_current_user, scopes=[Scopes.user.value]),
+         session=Depends(user_connection)) -> UserBox:
+    return UserBox(u=current_user, s=session)
 
 
-async def user_transaction():
-    async with user_engine.transaction():
-        yield tab.user
+def admin(current_user=Security(get_current_user, scopes=[Scopes.admin.value]),
+          session: AsyncSession = Depends(admin_connection)) -> AdminBox:
+    return AdminBox(u=current_user, s=session)
 
 
-async def admin_transaction():
-    async with admin_engine.transaction():
-        yield tab.admin
+def developer(current_user=Security(get_current_user, scopes=[Scopes.dev.value]),
+              session: AsyncSession = Depends(developer_connection)) -> DeveloperBox:
+    return DeveloperBox(u=current_user, s=session)
 
 
-async def developer_transaction():
-    async with developer_engine.transaction():
-        yield tab.developer
-
-
-async def system_transaction():
-    async with system_engine.transaction():
-        yield tab.system
-
-
-def guest(table=Depends(guest_transaction)):
-    return table
-
-
-def user(user=Security(get_current_user, scopes=[Scopes.user.value]),
-         table=Depends(user_transaction)):
-    return Tab(u=user, t=table)
-
-
-def admin(user=Security(get_current_user, scopes=[Scopes.admin.value]),
-          table=Depends(admin_transaction)):
-    return Tab(u=user, t=table)
-
-
-def developer(user=Security(get_current_user, scopes=[Scopes.dev.value]),
-              table=Depends(developer_transaction)):
-    return Tab(u=user, t=table)
-
-
-def system(user=Security(get_current_user, scopes=[Scopes.system.value]),
-           table=Depends(system_transaction)):
-    """Неиспользуется"""
-    return Tab(u=user, t=table)
+def system(current_user=Security(get_current_user, scopes=[Scopes.system.value]),
+           session: AsyncSession = Depends(system_connection)) -> SystemBox:
+    return SystemBox(u=current_user, s=session)
