@@ -5,12 +5,12 @@ from typing import Literal
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.piccolo_db.gh import tables as tab
-from src.piccolo_db.piccolo_conf import guest_engine
-from src.piccolo_db.piccolo_conf import user_engine
-from src.piccolo_db.piccolo_conf import admin_engine
-from src.piccolo_db.piccolo_conf import developer_engine
-from src.piccolo_db.piccolo_conf import system_engine
+# from src.piccolo_db.gh import tables as tab
+# from src.piccolo_db.piccolo_conf import guest_engine
+# from src.piccolo_db.piccolo_conf import user_engine
+# from src.piccolo_db.piccolo_conf import admin_engine
+# from src.piccolo_db.piccolo_conf import developer_engine
+# from src.piccolo_db.piccolo_conf import system_engine
 from src.utils.enums import Scopes
 from src.api.security.get_user import get_current_user
 from src.api.security.schemes import Tab
