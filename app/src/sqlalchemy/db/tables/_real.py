@@ -7,14 +7,13 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm.decl_api import DeclarativeMeta
 from sqlalchemy.ext.asyncio import AsyncEngine
-
+from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio import create_async_engine
 
 from src.sqlalchemy.db.before_connect.connect_utils import base_connect_dict
 from src.utils.files import check_environment_params_loaded
 
 __all__ = ["real_engine_config",
-           # "real_engine",
            "BaseOfRealDB",
            "User"]
 check_environment_params_loaded()
@@ -28,8 +27,8 @@ real_engine_config = {
 
 }
 print(*real_engine_config.items(), sep='\n')
-# real_engine = create_async_engine(URL(**real_engine_config), **base_connect_dict))
-BaseOfRealDB = declarative_base()
+
+BaseOfRealDB = declarative_base(name="BaseOfRealDB")
 
 
 class User(BaseOfRealDB):
