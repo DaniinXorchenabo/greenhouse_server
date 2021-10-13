@@ -4,7 +4,7 @@ from src.utils.files import check_environment_params_loaded
 
 __all__ = ["base_connect_dict", "migration_engine_config"]
 
-base_connect_dict: dict = {}
+base_connect_dict: dict = dict(future=True, echo=True)
 
 check_environment_params_loaded()
 
