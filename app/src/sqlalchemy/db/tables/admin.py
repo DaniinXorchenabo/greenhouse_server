@@ -13,22 +13,23 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from src.sqlalchemy.db.before_connect.connect_utils import base_connect_dict
 from src.utils.files import check_environment_params_loaded
 
-__all__ = ["real_engine_config",
-           "BaseOfRealDB",
+__all__ = ["admin_engine_config",
+           "BaseOfAdminDB",
            "User"]
+
+
 check_environment_params_loaded()
-real_engine_config = {
+
+admin_engine_config = {
     "database": os.environ.get("PGDATABASE"),
-    "username": os.environ.get("PG_SUPERUSER_NAME"),
-    "password": os.environ.get("PG_SUPERUSER_PASSWORD"),
+    "username": os.environ.get("PG_ADMIN_NAME"),
+    "password": os.environ.get("PG_ADMIN_PASSWORD"),
     "host": os.environ.get("PGHOST"),
     "port": os.environ.get("PGPORT"),
     "drivername": "postgresql+asyncpg"
 
 }
-print(*real_engine_config.items(), sep='\n')
-
-_Current_Base = BaseOfRealDB = declarative_base(name="BaseOfRealDB")
+_Current_Base = BaseOfAdminDB = declarative_base(name="BaseOfAdminDB")
 
 
 class User(_Current_Base):
