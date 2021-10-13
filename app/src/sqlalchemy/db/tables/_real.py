@@ -4,14 +4,17 @@ from uuid import uuid4
 from sqlalchemy.engine.url import URL
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID, ARRAY
 from sqlalchemy.orm.decl_api import DeclarativeMeta
 from sqlalchemy.ext.asyncio import AsyncEngine
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio import create_async_engine
 
+
 from src.sqlalchemy.db.before_connect.connect_utils import base_connect_dict
 from src.utils.files import check_environment_params_loaded
+from src.sqlalchemy.db.orm_model_expansion.user import ScopesForUser
+
 
 __all__ = ["real_engine_config",
            "BaseOfRealDB",
@@ -31,11 +34,18 @@ print(*real_engine_config.items(), sep='\n')
 _Current_Base = BaseOfRealDB = declarative_base(name="BaseOfRealDB")
 
 
-class User(_Current_Base):
+class User(_Current_Base, ScopesForUser):
     __tablename__ = 'user_'
     # __bind_key__ = "real"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    username = Column(String(100), nullable=False, unique=True)
+    name = Column(String(50), nullable=False)
+    surname = Column(String(50), nullable=False)
+    hashed_password = Column(String(4096), nullable=False)
+    email = Column(String(100), nullable=False, unique=True)
+    _scopes = Column(ARRAY(String(1)), nullable=False, default=[])
+
 
     def __repr__(self):
         return "".format(self.id)
