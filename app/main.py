@@ -3,14 +3,12 @@ from src.utils.files import check_environment_params_loaded
 check_environment_params_loaded()
 
 from typing import Any, Optional, Awaitable
-from src.piccolo_db.gh import tables as tab
 from fastapi import FastAPI, Depends
 import uvicorn
 from src.init_app import init_app_func
 import importlib
 from pydantic import BaseModel
 
-from src.piccolo_db.piccolo_conf import system_engine, guest_engine
 from src.api.security.check_roles import admin
 from src.api.security.schemes import Tab
 

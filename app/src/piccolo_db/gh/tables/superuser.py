@@ -15,6 +15,8 @@ class Scopes(str, Enum):
     system = 's'
 
 
+
+
 class User(Table, tablename="base_user"):
     id = UUID(primary_key=True, required=True, unique=True)
     name = Varchar(required=True)

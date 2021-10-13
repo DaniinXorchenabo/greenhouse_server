@@ -6,11 +6,11 @@ from fastapi.responses import JSONResponse
 from piccolo.engine import engine_finder
 
 from src.api.add_routers import add_routers_func
-from src.piccolo_db.piccolo_conf import guest_engine
-from src.piccolo_db.piccolo_conf import user_engine
-from src.piccolo_db.piccolo_conf import admin_engine
-from src.piccolo_db.piccolo_conf import developer_engine
-from src.piccolo_db.piccolo_conf import system_engine
+# from src.piccolo_db.piccolo_conf import guest_engine
+# from src.piccolo_db.piccolo_conf import user_engine
+# from src.piccolo_db.piccolo_conf import admin_engine
+# from src.piccolo_db.piccolo_conf import developer_engine
+# from src.piccolo_db.piccolo_conf import system_engine
 from src.connect_with_proxy import add_proxy
 
 
