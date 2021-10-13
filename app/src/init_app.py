@@ -22,26 +22,26 @@ def init_app_func(app: FastAPI):
 
     add_routers_func(app)
 
-    @app.on_event("startup")
-    async def open_database_connection_pool():
-        try:
-            engines = [guest_engine, user_engine,
-                       admin_engine, developer_engine,
-                       system_engine]
-            [await engine.start_connection_pool(max_size=20) for engine in engines]
-        except Exception as e:
-            print("----Unable to connect to the database, open_database_connection_pool", e)
+    # @app.on_event("startup")
+    # async def open_database_connection_pool():
+    #     try:
+    #         engines = [guest_engine, user_engine,
+    #                    admin_engine, developer_engine,
+    #                    system_engine]
+    #         [await engine.start_connection_pool(max_size=20) for engine in engines]
+    #     except Exception as e:
+    #         print("----Unable to connect to the database, open_database_connection_pool", e)
 
-    @app.on_event("shutdown")
-    async def close_database_connection_pool():
-        try:
-            engines = [guest_engine, user_engine,
-                       admin_engine, developer_engine,
-                       system_engine]
-            [await engine.close_connection_pool() for engine in engines]
-
-        except Exception as e:
-            print("----Unable to connect to the database, close_database_connection_pool", e)
+    # @app.on_event("shutdown")
+    # async def close_database_connection_pool():
+    #     try:
+    #         engines = [guest_engine, user_engine,
+    #                    admin_engine, developer_engine,
+    #                    system_engine]
+    #         [await engine.close_connection_pool() for engine in engines]
+    #
+    #     except Exception as e:
+    #         print("----Unable to connect to the database, close_database_connection_pool", e)
 
     @app.exception_handler(asyncpg.exceptions.InsufficientPrivilegeError)
     async def permission_error(request: Request, exc: asyncpg.exceptions.InsufficientPrivilegeError):

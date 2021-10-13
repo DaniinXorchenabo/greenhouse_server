@@ -5,11 +5,15 @@ from jose import JWTError, jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import SecurityScopes
 from pydantic import ValidationError
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.utils.security import verify_password
-from src.piccolo_db.gh import tables as tab
+# from src.piccolo_db.gh import tables as tab
 from src.api.security.config import oauth2_scheme
 from src.api.security.schemes import TokenData
+from src.sqlalchemy.db.connections import system_connection
+from src.sqlalchemy.db import system
+
 
 __all__ = [
     "get_user",
@@ -23,8 +27,8 @@ ALGORITHM = os.environ.get("TOKEN_ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
-def get_user(username: str):
-    return (u := tab.system.User).objects().where(u.username == username).first().run()
+def get_user(username: str, session: AsyncSession = Depends(system_connection)) -> Awaitable:
+    return system.User.get_via_username(session, username)
 
 
 async def authenticate_user(username: str, password: str):

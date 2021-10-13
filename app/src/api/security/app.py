@@ -42,8 +42,8 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@app.post("/sign_up")
-async def registration(data: UserCreate = Body(...)):
-    async with system_engine.transaction():
-        res = await tab.system.User(**DbUser(**(data.dict() | {"scopes": [Scopes.user]})).dict()).save().run()
-        return res
+# @app.post("/sign_up")
+# async def registration(data: UserCreate = Body(...)):
+#     async with system_engine.transaction():
+#         res = await tab.system.User(**DbUser(**(data.dict() | {"scopes": [Scopes.user]})).dict()).save().run()
+#         return res

@@ -9,7 +9,7 @@ from src.init_app import init_app_func
 import importlib
 from pydantic import BaseModel
 
-from src.api.security.check_roles import admin
+from src.api.security.check_roles import admin, user
 from src.api.security.schemes import Tab
 
 app = FastAPI()
@@ -21,11 +21,12 @@ async def root():
 
 
 @app.get("/status1/")
-async def read_system_status(t: Tab = Depends(admin)):  # , scopes=['g', 'a']
+async def read_system_status(t: Tab = Depends(user)):  # , scopes=['g', 'a']
     print("функция запроса")
-    u2 = (await (u := tab.guest.User).objects().where(u.username == "Vasiliev_1").first().run())
+    print(t)
+    # u2 = (await (u := tab.guest.User).objects().where(u.username == "Vasiliev_1").first().run())
     print("конец системной транзакции")
-    return {"status": "ok", "u": t.u, "us": u2}
+    return {"status": "ok"}
 
 
 init_app_func(app)

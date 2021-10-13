@@ -15,10 +15,10 @@ from src.utils.enums import Scopes
 from src.api.security.get_user import get_current_user
 from src.api.security.schemes import Tab
 
-from src.piccolo_db.gh.tables import guest as test_guest
-from src.sqlalchemy.db.tables import _real as _t_real, guest as t_guest
-from src.sqlalchemy.db.tables import user as t_user, admin as t_admin
-from src.sqlalchemy.db.tables import developer as t_developer, system as t_system
+# from src.piccolo_db.gh.tables import guest as test_guest
+# from src.sqlalchemy.db.tables import _real as _t_real, guest as t_guest
+# from src.sqlalchemy.db.tables import user as t_user, admin as t_admin
+# from src.sqlalchemy.db.tables import developer as t_developer, system as t_system
 from src.sqlalchemy.db.connections import _real_connection, guest_connection, user_connection
 from src.sqlalchemy.db.connections import admin_connection, developer_connection, system_connection
 from src.sqlalchemy.db.tables import TypeReal, TypeGuest, TypeUser, TypeAdmin, TypeDeveloper, TypeSystem
@@ -39,7 +39,7 @@ def guest(session: AsyncSession = Depends(guest_connection)) -> GuestBox:
 
 
 def user(current_user: AsyncSession = Security(get_current_user, scopes=[Scopes.user.value]),
-         session=Depends(user_connection)) -> UserBox:
+         session: AsyncSession = Depends(user_connection)) -> UserBox:
     return UserBox(u=current_user, s=session)
 
 

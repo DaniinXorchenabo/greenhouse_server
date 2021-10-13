@@ -43,7 +43,9 @@ async def developer_connection() -> AsyncIterator[AsyncSession]:
 async def system_connection() -> AsyncIterator[AsyncSession]:
     async with system_session() as session:
         async with session.begin():
+            print('системная транзакция началась')
             yield session
+            print("системная транзакция закончилась")
 
 #
 # async def get_db() -> AsyncIterator[tab.guest]:
