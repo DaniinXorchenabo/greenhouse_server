@@ -12,6 +12,8 @@ from sqlalchemy.ext.asyncio import create_async_engine
 
 from src.sqlalchemy.db.before_connect.connect_utils import base_connect_dict
 from src.utils.files import check_environment_params_loaded
+from src.sqlalchemy.db.orm_model_expansion.user import  MapperOfUser
+
 
 __all__ = ["guest_engine_config",
            "BaseOfGuestDB",
@@ -30,7 +32,7 @@ guest_engine_config = {
 _Current_Base = BaseOfGuestDB = declarative_base(name="BaseOfGuestDB")
 
 
-class User(_Current_Base):
+class User(_Current_Base, MapperOfUser):
     __tablename__ = 'user_'
     # __bind_key__ = "real"
 

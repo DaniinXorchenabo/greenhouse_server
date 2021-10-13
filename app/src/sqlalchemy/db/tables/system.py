@@ -12,7 +12,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 
 from src.sqlalchemy.db.before_connect.connect_utils import base_connect_dict
 from src.utils.files import check_environment_params_loaded
-from src.sqlalchemy.db.orm_model_expansion.user import ScopesForUser
+from src.sqlalchemy.db.orm_model_expansion.user import ScopesForUser, MapperOfUser
 
 
 __all__ = ["system_engine_config",
@@ -32,7 +32,7 @@ system_engine_config = {
 _Current_Base = BaseOfSystemDB = declarative_base(name="BaseOfSystemDB")
 
 
-class User(_Current_Base, ScopesForUser):
+class User(_Current_Base, ScopesForUser, MapperOfUser):
     __tablename__ = 'user_'
     # __bind_key__ = "real"
 

@@ -9,11 +9,14 @@ from sqlalchemy.orm.decl_api import DeclarativeMeta
 from sqlalchemy.ext.asyncio import AsyncEngine
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy.future import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.sql.selectable import Select
 
 
 from src.sqlalchemy.db.before_connect.connect_utils import base_connect_dict
 from src.utils.files import check_environment_params_loaded
-from src.sqlalchemy.db.orm_model_expansion.user import ScopesForUser
+from src.sqlalchemy.db.orm_model_expansion.user import ScopesForUser, MapperOfUser
 
 
 __all__ = ["real_engine_config",
@@ -34,7 +37,7 @@ print(*real_engine_config.items(), sep='\n')
 _Current_Base = BaseOfRealDB = declarative_base(name="BaseOfRealDB")
 
 
-class User(_Current_Base, ScopesForUser):
+class User(_Current_Base, ScopesForUser, MapperOfUser):
     __tablename__ = 'user_'
     # __bind_key__ = "real"
 
@@ -49,3 +52,4 @@ class User(_Current_Base, ScopesForUser):
 
     def __repr__(self):
         return "".format(self.id)
+
