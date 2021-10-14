@@ -23,23 +23,23 @@ class TypeReal(NamedTuple):
 
 
 class TypeGuest(NamedTuple):
-    User: Type[_real_User] = _real_User
+    User: Type[guest_User] = guest_User
 
 
 class TypeUser(NamedTuple):
-    User: Type[_real_User] = _real_User
+    User: Type[user_User] = user_User
 
 
 class TypeAdmin(NamedTuple):
-    User: Type[_real_User] = _real_User
+    User: Type[admin_User] = admin_User
 
 
 class TypeDeveloper(NamedTuple):
-    User: Type[_real_User] = _real_User
+    User: Type[dev_User] = dev_User
 
 
 class TypeSystem(NamedTuple):
-    User: Type[_real_User] = _real_User
+    User: Type[system_User] = system_User
 
 
 _real = TypeReal()
