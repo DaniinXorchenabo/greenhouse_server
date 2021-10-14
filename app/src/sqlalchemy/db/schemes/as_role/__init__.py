@@ -13,6 +13,7 @@ from src.sqlalchemy.db.schemes.as_role.guest import OutUser as guest_OutUser
 from src.sqlalchemy.db.schemes.as_role.user import DbUser as user_DbUser
 from src.sqlalchemy.db.schemes.as_role.user import OutUser as user_OutUser
 from src.sqlalchemy.db.schemes.as_role.user import InUser as user_InUser
+from src.sqlalchemy.db.schemes.as_role.user import UpdateMyself as user_UpdateMyself
 
 from src.sqlalchemy.db.schemes.as_role.admin import DbUser as admin_DbUser
 from src.sqlalchemy.db.schemes.as_role.admin import InUser as admin_InUser
@@ -49,6 +50,7 @@ class TypeUserSchema(NamedTuple):
     DbUser: Type[user_DbUser] = user_DbUser
     OutUser: Type[user_OutUser] = user_OutUser
     InUser: Type[user_InUser] = user_InUser
+    UpdateMyself: Type[user_UpdateMyself] = user_UpdateMyself
 
 
 class TypeAdminSchema(NamedTuple):

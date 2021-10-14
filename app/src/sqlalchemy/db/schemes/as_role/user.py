@@ -1,4 +1,5 @@
 from uuid import  UUID, uuid4
+from typing import Optional
 
 from pydantic import BaseModel, root_validator
 
@@ -37,4 +38,10 @@ class InUser(DbUser):
     surname: str
     email: str
 
+
+class UpdateMyself(BaseModel):
+    username: Optional[str] = None
+    name: Optional[str] = None
+    surname: Optional[str] = None
+    email: Optional[str] = None
 
