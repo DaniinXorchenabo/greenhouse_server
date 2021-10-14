@@ -1,12 +1,8 @@
 from uuid import UUID
 
 from fastapi import APIRouter, Path, Depends
-# from fastapi
 
 from src.api.security.check_roles import user
-from src.api.security.schemes import Tab
-# from src.piccolo_db.gh.tables import user as models
-# from src.piccolo_db.gh import schemes as sch
 
 __all__ = ["app"]
 

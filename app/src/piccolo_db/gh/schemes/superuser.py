@@ -1,1 +1,0 @@
-from src.piccolo_db.gh.tables import superuser

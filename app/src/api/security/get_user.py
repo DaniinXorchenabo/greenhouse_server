@@ -8,7 +8,6 @@ from pydantic import ValidationError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.utils.security import verify_password
-# from src.piccolo_db.gh import tables as tab
 from src.api.security.config import oauth2_scheme
 from src.api.security.schemes import TokenData
 from src.sqlalchemy.db.connections import system_connection

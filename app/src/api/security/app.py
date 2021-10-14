@@ -6,14 +6,10 @@ from fastapi.security import (
     OAuth2PasswordRequestForm,
 )
 
-# from src.piccolo_db.piccolo_conf import guest_engine
 from src.api.security.schemes import Token
 from src.api.security.get_user import authenticate_user
 from src.api.security.utils import create_access_token
 from src.api.security.config import TOKEN_URL
-# from src.piccolo_db.gh.schemes.system import UserCreate, DbUser
-# from src.piccolo_db.piccolo_conf import system_engine
-# from src.piccolo_db.gh import tables as tab
 from src.sqlalchemy.db.schemes.as_role._real import CreateUser
 from src.sqlalchemy.db import _real
 from src.sqlalchemy.db.sessions import system_session

@@ -1,5 +1,11 @@
 from enum import Enum
-from src.piccolo_db.gh.tables.superuser import Scopes
+
+class Scopes(str, Enum):
+    guest = 'g'
+    user = 'u'
+    admin = 'a'
+    dev = 'd'
+    system = 's'
 
 __all__ = ["Scopes"]
 
