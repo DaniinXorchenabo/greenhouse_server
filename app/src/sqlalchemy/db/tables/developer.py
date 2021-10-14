@@ -46,4 +46,4 @@ class User(_Current_Base, ScopesForUser, MapperOfUser):
 
 
     def __repr__(self):
-        return "".format(self.id)
+        return f"dev.User({self.username}, id={str(self.id)[:6]})"

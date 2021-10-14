@@ -43,6 +43,5 @@ class User(_Current_Base, MapperOfUser):
     email = Column(String(100), nullable=False, unique=True)
     # _scopes = Column(ARRAY(String(1)), nullable=False, default=[])
 
-
     def __repr__(self):
-        return "".format(self.id)
+        return f"user.User({self.username}, id={str(self.id)[:6]})"
