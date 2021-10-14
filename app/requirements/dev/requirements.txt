@@ -9,4 +9,5 @@ jinja2
 dill
 httpx
 sqlalchemy[asyncio]
+asyncpg
 alembic
