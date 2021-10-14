@@ -15,7 +15,7 @@ from alembic import context
 
 # from src.utils.db import get_migration_url
 from src.utils.files import check_environment_params_loaded
-from src.sqlalchemy.db.tables._real import real_engine_config
+from src.db.models.tables._real import real_engine_config
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -31,8 +31,8 @@ fileConfig(config.config_file_name)
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 
-from src.sqlalchemy.db.tables._real import BaseOfRealDB
-from src.sqlalchemy.db.before_connect.connect_utils import migration_engine_config
+from src.db.models.tables._real import BaseOfRealDB
+from src.db.models.before_connect.connect_utils import migration_engine_config
 
 target_metadata = BaseOfRealDB.metadata
 

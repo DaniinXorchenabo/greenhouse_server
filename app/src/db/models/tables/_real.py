@@ -14,9 +14,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql.selectable import Select
 
 
-from src.sqlalchemy.db.before_connect.connect_utils import base_connect_dict
+from src.db.models.before_connect.connect_utils import base_connect_dict
 from src.utils.files import check_environment_params_loaded
-from src.sqlalchemy.db.orm_model_expansion.user import ScopesForUser, MapperOfUser
+from src.db.models.orm_model_expansion.user import ScopesForUser, MapperOfUser
 
 
 __all__ = ["real_engine_config",

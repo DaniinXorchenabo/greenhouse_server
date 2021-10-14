@@ -2,8 +2,8 @@ from typing import AsyncIterator
 
 from sqlalchemy.ext.asyncio import  AsyncSession
 
-from src.sqlalchemy.db.sessions import _real_session, guest_session, user_session
-from src.sqlalchemy.db.sessions import admin_session, developer_session, system_session
+from src.db.models.sessions import _real_session, guest_session, user_session
+from src.db.models.sessions import admin_session, developer_session, system_session
 
 
 __all__ = ["_real_connection", 'guest_connection', 'user_connection',

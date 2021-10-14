@@ -3,14 +3,14 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.asyncio import AsyncEngine
 from sqlalchemy.engine.url import URL
 
-from src.sqlalchemy.db.before_connect.connect_utils import base_connect_dict
+from src.db.models.before_connect.connect_utils import base_connect_dict
 
-from src.sqlalchemy.db.tables._real import real_engine_config
-from src.sqlalchemy.db.tables.guest import guest_engine_config
-from src.sqlalchemy.db.tables.user import user_engine_config
-from src.sqlalchemy.db.tables.admin import admin_engine_config
-from src.sqlalchemy.db.tables.developer import developer_engine_config
-from src.sqlalchemy.db.tables.system import system_engine_config
+from src.db.models.tables._real import real_engine_config
+from src.db.models.tables.guest import guest_engine_config
+from src.db.models.tables.user import user_engine_config
+from src.db.models.tables.admin import admin_engine_config
+from src.db.models.tables.developer import developer_engine_config
+from src.db.models.tables.system import system_engine_config
 
 
 __all__ = ["_real_engine", "guest_engine", "user_engine",

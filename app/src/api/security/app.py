@@ -10,9 +10,9 @@ from src.api.security.schemes import Token
 from src.api.security.get_user import authenticate_user
 from src.api.security.utils import create_access_token
 from src.api.security.config import TOKEN_URL
-from src.sqlalchemy.db.schemes.as_role._real import CreateUser
-from src.sqlalchemy.db import _real
-from src.sqlalchemy.db.sessions import system_session
+from src.db.models.schemes.as_role._real import CreateUser
+from src.db.models import _real
+from src.db.models.sessions import system_session
 
 
 

@@ -2,14 +2,14 @@ from typing import NamedTuple
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.sqlalchemy.db.tables import _real, guest, user, admin, developer, system
-from src.sqlalchemy.db.tables import TypeReal, TypeGuest, TypeUser, TypeAdmin, TypeDeveloper, TypeSystem
-from src.sqlalchemy.db.sessions import _real_session, guest_session, user_session
-from src.sqlalchemy.db.sessions import admin_session, developer_session, system_session
-from src.sqlalchemy.db.schemes import guest_schema, user_schema, admin_schema
-from src.sqlalchemy.db.schemes import developer_schema, system_schema, _real_schema
-from src.sqlalchemy.db.schemes import TypeGuestSchema, TypeUserSchema, TypeAdminSchema
-from src.sqlalchemy.db.schemes import TypeDeveloperSchema, TypeSystemSchema, TypeRealSchema
+from src.db.models.tables import _real, guest, user, admin, developer, system
+from src.db.models.tables import TypeReal, TypeGuest, TypeUser, TypeAdmin, TypeDeveloper, TypeSystem
+from src.db.models.sessions import _real_session, guest_session, user_session
+from src.db.models.sessions import admin_session, developer_session, system_session
+from src.db.models.schemes import guest_schema, user_schema, admin_schema
+from src.db.models.schemes import developer_schema, system_schema, _real_schema
+from src.db.models.schemes import TypeGuestSchema, TypeUserSchema, TypeAdminSchema
+from src.db.models.schemes import TypeDeveloperSchema, TypeSystemSchema, TypeRealSchema
 
 
 class GuestBox(NamedTuple):

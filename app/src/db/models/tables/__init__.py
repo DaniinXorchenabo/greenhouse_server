@@ -1,17 +1,17 @@
 from collections import namedtuple
 from typing import NamedTuple, Type
 
-from src.sqlalchemy.db.tables._real import User as _real_User
+from src.db.models.tables._real import User as _real_User
 
-from src.sqlalchemy.db.tables.guest import User as guest_User
+from src.db.models.tables.guest import User as guest_User
 
-from src.sqlalchemy.db.tables.user import User as user_User
+from src.db.models.tables.user import User as user_User
 
-from src.sqlalchemy.db.tables.admin import User as admin_User
+from src.db.models.tables.admin import User as admin_User
 
-from src.sqlalchemy.db.tables.developer import User as dev_User
+from src.db.models.tables.developer import User as dev_User
 
-from src.sqlalchemy.db.tables.system import User as system_User
+from src.db.models.tables.system import User as system_User
 
 __all__ = ['_real', 'guest', 'user', 'admin', 'developer', 'system',
            "TypeReal", "TypeGuest", "TypeUser", "TypeAdmin",

@@ -2,8 +2,8 @@ from typing import Type
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 
-from src.sqlalchemy.db.engines import _real_engine, guest_engine, user_engine
-from src.sqlalchemy.db.engines import admin_engine, developer_engine, system_engine
+from src.db.models.engines import _real_engine, guest_engine, user_engine
+from src.db.models.engines import admin_engine, developer_engine, system_engine
 
 
 __all__ = ["_real_session", "guest_session", "user_session",

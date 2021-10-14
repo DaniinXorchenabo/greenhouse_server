@@ -11,7 +11,7 @@ from pydantic import BaseModel
 
 
 from src.api.security.check_roles import admin, user, guest
-from src.sqlalchemy.db import UserBox, GuestBox
+from src.db.models import UserBox, GuestBox
 
 app = FastAPI()
 
