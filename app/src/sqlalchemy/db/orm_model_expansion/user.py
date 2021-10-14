@@ -46,9 +46,7 @@ class MapperOfUser(object):
         async with _session() as session:
 
             query: Select = select(cls).where(cls.username == username)
-            print("*&--------", query, [query])
             res = await session.execute(query)
-            # print("^%$-----", res)
             user_ = res.scalars().first()
             print("**_------------", user_, [user_], type(user_))
             return user_
