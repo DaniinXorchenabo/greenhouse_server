@@ -64,7 +64,7 @@ services:
       bash -c "cd ../..
       && cd code/gh_server/app
       && sleep 1
-      && alembic --config src/db/migrations/alembic.ini upgrade head
+      && alembic --config ./src/db/migrations/alembic.ini upgrade head
       && uvicorn main:app --reload --host 0.0.0.0 --port ${APP_PORT}"
 
     links:
