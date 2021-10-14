@@ -107,11 +107,12 @@ async def run_migrations_online():
 
     # url = URL(**real_engine_config)
     try:
+        assert False
         url = URL(**migration_engine_config)
         connectable: AsyncEngine = AsyncEngine(create_engine(url, **{"poolclass": pool.NullPool, "future": True, }))
         async with connectable.connect() as connection:
             await connection.run_sync(do_run_migrations)
-    except (asyncpg.exceptions.InvalidPasswordError, sqlalchemy.exc.ProgrammingError) as e:
+    except (asyncpg.exceptions.InvalidPasswordError, sqlalchemy.exc.ProgrammingError, AssertionError) as e:
         # raise e from e
         print("------------------ERROR. I'm using super_user role!!!!!!")
         url = URL(**real_engine_config)

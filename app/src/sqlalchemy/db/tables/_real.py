@@ -2,7 +2,7 @@ import os
 from uuid import uuid4
 
 from sqlalchemy.engine.url import URL
-from sqlalchemy import create_engine, Column, Integer, String, DateTime
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.postgresql import UUID, ARRAY
 from sqlalchemy.orm.decl_api import DeclarativeMeta
@@ -42,14 +42,18 @@ class User(_Current_Base, ScopesForUser, MapperOfUser):
     # __bind_key__ = "real"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
-    username = Column(String(100), nullable=False, unique=True)
+    username = Column(String(100), nullable=False)
     name = Column(String(50), nullable=False)
     surname = Column(String(50), nullable=False)
     hashed_password = Column(String(4096), nullable=False)
-    email = Column(String(100), nullable=False, unique=True)
+    email = Column(String(100), nullable=False)
     _scopes = Column(ARRAY(String(1)), nullable=False, default=[])
 
+    __table_args__ = (
+        UniqueConstraint('username'),
+        UniqueConstraint('email'),
+    )
 
     def __repr__(self):
-        return "".format(self.id)
+        return f"_real.User({self.username}, id={str(self.id)[:6]})"
 

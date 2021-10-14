@@ -13,6 +13,7 @@ from src.api.security.config import oauth2_scheme
 from src.api.security.schemes import TokenData
 from src.sqlalchemy.db.connections import system_connection
 from src.sqlalchemy.db import system
+from src.sqlalchemy.db.sessions import system_session
 
 
 __all__ = [
@@ -27,12 +28,13 @@ ALGORITHM = os.environ.get("TOKEN_ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
-def get_user(username: str, session: AsyncSession = Depends(system_connection)) -> Awaitable:
-    return system.User.get_via_username(session, username)
+def get_user(username: str) -> Awaitable:
+    return system.User.get_via_username(system_session, username)
 
 
 async def authenticate_user(username: str, password: str):
     user = await get_user(username)
+    print("34523", user)
     if user is None:
         return False
     if not verify_password(password, user.hashed_password):
