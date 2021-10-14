@@ -5,11 +5,17 @@ from pydantic import BaseModel, root_validator
 from src.utils.security import get_password_hash
 from src.utils.enums import Scopes
 
-__all__ = ["DbUser"]
+__all__ = ["DbUser", "CreateUser"]
 
 
 class DbUser(BaseModel):
     id: UUID
+    username: str
+    name: str
+    surname: str
+    hashed_password: str
+    email: str
+    _scopes: list[Scopes]
 
 
 class CreateUser(BaseModel):
@@ -28,3 +34,23 @@ class CreateUser(BaseModel):
         values["hashed_password"] = get_password_hash(values.pop('password'))
         values["_scopes"] = [Scopes.user]
         return values
+
+
+class OutUser(DbUser):
+    id: UUID
+    username: str
+    name: str
+    surname: str
+    email: str
+    _scopes: list[Scopes]
+
+
+class InUser(DbUser):
+    id: UUID
+    username: str
+    name: str
+    surname: str
+    email: str
+    _scopes: list[Scopes]
+
+
