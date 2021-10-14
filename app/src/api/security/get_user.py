@@ -34,7 +34,7 @@ def get_user(username: str) -> Awaitable:
 
 async def authenticate_user(username: str, password: str):
     user = await get_user(username)
-    print("34523", user)
+    # print("34523", user)
     if user is None:
         return False
     if not verify_password(password, user.hashed_password):

@@ -1,26 +1,20 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 import os
 
-from fastapi import Depends, APIRouter, HTTPException, Security, Form, Body
+from fastapi import Depends, APIRouter, HTTPException, Body
 from fastapi.security import (
-    OAuth2PasswordBearer,
     OAuth2PasswordRequestForm,
-    SecurityScopes,
 )
-from sqlalchemy.ext.asyncio import AsyncSession
-
 
 # from src.piccolo_db.piccolo_conf import guest_engine
-from src.api.security.schemes import Token, User
-from src.api.security.get_user import authenticate_user, get_current_user
+from src.api.security.schemes import Token
+from src.api.security.get_user import authenticate_user
 from src.api.security.utils import create_access_token
 from src.api.security.config import TOKEN_URL
 # from src.piccolo_db.gh.schemes.system import UserCreate, DbUser
 # from src.piccolo_db.piccolo_conf import system_engine
 # from src.piccolo_db.gh import tables as tab
-from src.utils.enums import Scopes
-from src.sqlalchemy.db.schemes._real import CreateUser
-from src.sqlalchemy.db.connections import system_connection
+from src.sqlalchemy.db.schemes.as_role._real import CreateUser
 from src.sqlalchemy.db import _real
 from src.sqlalchemy.db.sessions import system_session
 
