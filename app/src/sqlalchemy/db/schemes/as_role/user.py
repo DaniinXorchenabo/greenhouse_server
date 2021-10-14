@@ -20,6 +20,7 @@ class DbUser(BaseModel):
 
 
 class OutUser(DbUser):
+    id: UUID
     username: str
     name: str
     surname: str
@@ -30,6 +31,7 @@ class OutUser(DbUser):
 
 
 class InUser(DbUser):
+    id: UUID
     username: str
     name: str
     surname: str

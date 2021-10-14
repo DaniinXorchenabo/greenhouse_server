@@ -22,6 +22,7 @@ class DbUser(BaseModel):
 
 
 class OutUser(BaseModel):
+    id: UUID
     username: str
     name: str
     surname: str
