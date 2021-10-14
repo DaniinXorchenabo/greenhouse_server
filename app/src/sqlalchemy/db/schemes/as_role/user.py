@@ -15,12 +15,18 @@ class DbUser(BaseModel):
     surname: str
     email: str
 
+    class Config:
+        orm_mode = True
+
 
 class OutUser(DbUser):
     username: str
     name: str
     surname: str
     email: str
+
+    class Config:
+        orm_mode = True
 
 
 class InUser(DbUser):

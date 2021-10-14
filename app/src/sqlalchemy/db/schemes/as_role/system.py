@@ -17,6 +17,9 @@ class DbUser(BaseModel):
     email: str
     _scopes: list[Scopes]
 
+    class Config:
+        orm_mode = True
+
 
 class CreateUser(BaseModel):
     # id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -43,6 +46,9 @@ class OutUser(DbUser):
     surname: str
     email: str
     _scopes: list[Scopes]
+
+    class Config:
+        orm_mode = True
 
 
 class InUser(DbUser):

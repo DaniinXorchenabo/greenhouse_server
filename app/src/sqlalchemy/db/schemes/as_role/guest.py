@@ -17,11 +17,17 @@ class DbUser(BaseModel):
     # email: str
     # _scopes: list[Scopes]
 
+    class Config:
+        orm_mode = True
+
 
 class OutUser(BaseModel):
     username: str
     name: str
     surname: str
+
+    class Config:
+        orm_mode = True
 
 
 class InUser(DbUser):

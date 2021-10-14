@@ -16,6 +16,9 @@ class DbUser(BaseModel):
     email: str
     _scopes: list[Scopes]
 
+    class Config:
+        orm_mode = True
+
 
 class OutUser(DbUser):
     username: str
@@ -23,6 +26,9 @@ class OutUser(DbUser):
     surname: str
     email: str
     _scopes: list[Scopes]
+
+    class Config:
+        orm_mode = True
 
 
 class InUser(DbUser):
