@@ -11,6 +11,7 @@ def add_http_exception_handlers(app: FastAPI) -> FastAPI:
 
     @app.exception_handler(MyBaseHttpException)
     async def base_http_error(request: Request, exc: MyBaseHttpException):
-        return JSONResponse(content=exc.detail.dict(), status_code=exc.status_code, headers=exc.headers)
+        # return JSONResponse(content=exc.detail.dict(), status_code=exc.status_code, headers=exc.headers)
+        return exc.response
 
     return app

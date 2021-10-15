@@ -2,6 +2,7 @@ from typing import Any, Optional
 from abc import ABC
 
 from fastapi import HTTPException
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from src.api.responses.error.error import BaseErrorResponse
@@ -19,3 +20,7 @@ class MyBaseHttpException(HTTPException, ABC):
         answer: BaseErrorResponse = answer or self.default_response_model(**kwargs)
         super(MyBaseHttpException, self).__init__(status_code, detail=answer, headers=headers)
         self.detail: BaseErrorResponse = answer
+
+    @property
+    def response(self) -> JSONResponse:
+        return JSONResponse(content=self.detail.dict(), status_code=self.status_code, headers=self.headers)

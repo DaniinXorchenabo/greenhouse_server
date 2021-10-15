@@ -10,7 +10,7 @@ from src.db.models import guest_schema, guest_session, system_schema, system as 
 from src.db.models import UserBox, GuestBox, AdminBox
 from src.api.routs.security.check_roles import guest, admin, user
 from src.api.responses.data import ManyUsersResponse, GetUserResponse, OkMessageResponse
-from src.api.exceptions.base import UserNotFoundError
+from src.api.exceptions import UserNotFoundError
 
 __all__ = ["app"]
 

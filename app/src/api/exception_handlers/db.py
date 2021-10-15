@@ -2,6 +2,9 @@ import asyncpg
 from fastapi import FastAPI, Response, Request
 from fastapi.responses import JSONResponse
 
+from src.api.exceptions.db_errors import UniqueDbBaseError, PermissionDbBaseError
+from src.api.responses.error.db import UniqueDbErrorResponse, PermissionDbErrorResponse
+
 
 __all__ = ['add_database_exception_handlers']
 
@@ -17,10 +20,7 @@ def add_database_exception_handlers(app: FastAPI) -> FastAPI:
         (может выполнять только SELECT)
         попытался выполнить операцию SQL INSERT
         """
-        return JSONResponse(
-            status_code=400,
-            content={"message": f"Вы не имеете доступа, необходимого для выполнения запроса"},
-        )
+        return PermissionDbBaseError().response
 
     @app.exception_handler(asyncpg.exceptions.UniqueViolationError)
     async def permission_error(request: Request, exc: asyncpg.exceptions.UniqueViolationError):
@@ -32,10 +32,7 @@ def add_database_exception_handlers(app: FastAPI) -> FastAPI:
         (может выполнять только SELECT)
         попытался выполнить операцию SQL INSERT
         """
-        return JSONResponse(
-            status_code=400,
-            content={"message": f"Какое-то из полей запроса уже имеется в БД. Поле должно быть уникальным!"},
-        )
+        return UniqueDbBaseError().response
 
     return app
 
