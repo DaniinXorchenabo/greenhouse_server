@@ -13,6 +13,9 @@ from src.api.routs.security.schemes import TokenData
 from src.db.models.connections import system_connection
 from src.db.models import system
 from src.db.models.sessions import system_session
+from src.api.exceptions.e_401_not_authorizes import BearerNotAuthorizedError
+from src.api.exceptions.e_404_not_found import PasswordOrUsernameIncorrectError
+from src.api.exceptions.e_403_forbidden import NotAccessForbidden
 
 
 __all__ = [
@@ -33,11 +36,8 @@ def get_user(username: str) -> Awaitable:
 
 async def authenticate_user(username: str, password: str):
     user = await get_user(username)
-    # print("34523", user)
-    if user is None:
-        return False
-    if not verify_password(password, user.hashed_password):
-        return False
+    assert user is not None, PasswordOrUsernameIncorrectError()
+    assert verify_password(password, user.hashed_password), PasswordOrUsernameIncorrectError()
     return user
 
 
@@ -45,38 +45,22 @@ async def get_current_user(
         security_scopes: SecurityScopes,
         token: str = Depends(oauth2_scheme),
 ):
-    # создание ошибки авторизации
-    if security_scopes.scopes:
-        authenticate_value = f'Bearer scope="{security_scopes.scope_str}"'
-    else:
-        authenticate_value = f"Bearer"
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": authenticate_value},
-    )
     print('\n\n-------------', security_scopes.scopes, "\n\n")
-    # получение данных из токена
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
-        if username is None:
-            raise credentials_exception
+        assert username is not None, BearerNotAuthorizedError()
         token_data = TokenData(scopes=payload.get("scopes", []), username=username)
         token_data.scopes = set(token_data.scopes)
     except (JWTError, ValidationError):
-        raise credentials_exception
+        raise BearerNotAuthorizedError(security_scopes.scope_str)
+
     user = await get_user(username=token_data.username)
-    if user is None:
-        raise credentials_exception
+    assert user is not None, BearerNotAuthorizedError(security_scopes.scope_str)
 
     # Хватает ли разрешений на доступ к этому роуту
     token_data.scopes &= set(user.scopes)
     for scope in security_scopes.scopes:
-        if scope not in token_data.scopes:  # то, что пришло в токене
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Not enough permissions",
-                headers={"WWW-Authenticate": authenticate_value},
-            )
+        assert scope in token_data.scopes, NotAccessForbidden()
+
     return user
