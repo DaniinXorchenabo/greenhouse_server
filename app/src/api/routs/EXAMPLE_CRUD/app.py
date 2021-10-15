@@ -10,6 +10,7 @@ from src.db.models import guest_schema, guest_session, system_schema, system as 
 from src.db.models import UserBox, GuestBox, AdminBox
 from src.api.routs.security.check_roles import guest, admin, user
 from src.api.responses.data import ManyUsersResponse, GetUserResponse, OkMessageResponse
+from src.api.exceptions.base import UserNotFoundError
 
 __all__ = ["app"]
 
@@ -24,7 +25,7 @@ async def watch_all_products(box: GuestBox = Depends(guest)):
 @app.get("/api/EXAMPLE_CRUD/user/{id}", response_model=GetUserResponse, tags=['profile'])
 async def watch_current_product(id_: UUID, box: GuestBox = Depends(guest)):
     if (user := await box.t.User.get_via_id(guest_session, id_)) is None:
-        raise Exception
+        raise UserNotFoundError()
     return {"user": user}
 
 
