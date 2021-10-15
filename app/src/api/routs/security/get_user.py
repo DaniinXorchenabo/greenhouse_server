@@ -8,8 +8,8 @@ from pydantic import ValidationError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.utils.security import verify_password
-from src.api.security.config import oauth2_scheme
-from src.api.security.schemes import TokenData
+from src.api.routs.security.config import oauth2_scheme
+from src.api.routs.security.schemes import TokenData
 from src.db.models.connections import system_connection
 from src.db.models import system
 from src.db.models.sessions import system_session

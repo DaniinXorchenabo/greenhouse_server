@@ -6,10 +6,10 @@ from fastapi.security import (
     OAuth2PasswordRequestForm,
 )
 
-from src.api.security.schemes import Token
-from src.api.security.get_user import authenticate_user
-from src.api.security.utils import create_access_token
-from src.api.security.config import TOKEN_URL
+from src.api.routs.security.schemes import Token
+from src.api.routs.security.get_user import authenticate_user
+from src.api.routs.security.utils import create_access_token
+from src.api.routs.security.config import TOKEN_URL
 from src.db.models.schemes.as_role._real import CreateUser
 from src.db.models import _real
 from src.db.models.sessions import system_session

@@ -6,8 +6,7 @@ from typing import Literal
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.utils.enums import Scopes
-from src.api.security.get_user import get_current_user
-from src.api.security.schemes import Tab
+from src.api.routs.security.get_user import get_current_user
 
 from src.db.models.connections import _real_connection, guest_connection, user_connection
 from src.db.models.connections import admin_connection, developer_connection, system_connection

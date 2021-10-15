@@ -2,7 +2,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Path, Depends
 
-from src.api.security.check_roles import user
+from src.api.routs.security.check_roles import user
 
 __all__ = ["app"]
 

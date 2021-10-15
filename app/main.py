@@ -2,16 +2,12 @@ from src.utils.files import check_environment_params_loaded
 
 check_environment_params_loaded()
 
-from typing import Any, Optional, Awaitable
 from fastapi import FastAPI, Depends
 import uvicorn
 from src.init_app import init_app_func
-import importlib
-from pydantic import BaseModel
 
-
-from src.api.security.check_roles import admin, user, guest
-from src.db.models import UserBox, GuestBox
+from src.api.routs.security.check_roles import user
+from src.db.models import UserBox
 
 app = FastAPI()
 
