@@ -10,5 +10,9 @@ from src.db.models import guest_schema, guest_session, system_schema, system as 
 from src.db.models import UserBox, GuestBox, AdminBox
 from src.api.routs.security.check_roles import guest, admin, user
 
-app = APIRouter()
+__all__ = ['app', 'tags']
 
+tags = {
+    'site': {"description": "какое-то описание"}
+}
+app = APIRouter()

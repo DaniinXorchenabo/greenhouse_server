@@ -9,7 +9,7 @@ from src.db.models.schemes import developer_schema, system_schema, _real_schema
 from src.api.responses.data.data import BaseDataResponse
 
 
-class MessageResponse(BaseResponse):
+class MessageResponse(BaseDataResponse):
     class_: DataResponseType = Field(DataResponseType.msg, const=True, example=DataResponseType.msg)
     message: MsgText
 

@@ -15,8 +15,8 @@ from src.db.models import _real
 from src.db.models.sessions import system_session
 
 
-
-__all__ = ["app"]
+tags = {"Auth": {"description": 'Авторизация пользователей'}}
+__all__ = ["app", 'tags']
 
 # to get a string like this run:
 # openssl rand -hex 32
@@ -24,7 +24,7 @@ SECRET_KEY = os.environ.get("AUTH_TOKEN_SECURITY")
 ALGORITHM = os.environ.get("TOKEN_ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-app = APIRouter()
+app = APIRouter(tags=['Auth'])
 
 
 @app.post("/" + TOKEN_URL, response_model=Token)

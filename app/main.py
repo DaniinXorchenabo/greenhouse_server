@@ -1,15 +1,17 @@
+from fastapi import FastAPI, Depends
+import uvicorn
+
 from src.utils.files import check_environment_params_loaded
 
 check_environment_params_loaded()
 
-from fastapi import FastAPI, Depends
-import uvicorn
 from src.init_app import init_app_func
-
 from src.api.routs.security.check_roles import user
 from src.db.models import UserBox
+from src.api import metadata
 
-app = FastAPI()
+
+app = FastAPI(**metadata)
 
 
 @app.get("/")
@@ -23,9 +25,6 @@ async def read_system_status(t: UserBox = Depends(user)):  # , scopes=['g', 'a']
     print(t)
     # u2 = (await (u := tab.guest.User).objects().where(u.username == "Vasiliev_1").first().run())
     return {"status": "ok"}
-
-
-
 
 
 init_app_func(app)
