@@ -14,5 +14,5 @@ class MessageResponse(BaseResponse):
     message: MsgText
 
 
-class OkMessageResponse(BaseResponse):
+class OkMessageResponse(MessageResponse):
     message: MsgText = Field(MsgText.ok, const=True, example=MsgText.ok)

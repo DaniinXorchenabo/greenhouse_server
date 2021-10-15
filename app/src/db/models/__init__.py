@@ -1,4 +1,4 @@
-from typing import NamedTuple
+from typing import NamedTuple, Union
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
