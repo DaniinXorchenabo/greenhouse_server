@@ -5,7 +5,7 @@ from sqlalchemy.engine.cursor import CursorResult
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import APIRouter, Body, Path, Depends
 
-from src.db.models.connections import system_connection
+from src.db.models.connections import system_write_conn
 from src.db.models import guest_schema, guest_session, system_schema, system as system_table, user_schema
 from src.db.models import UserBox, GuestBox, AdminBox
 from src.api.routs.security.check_roles import guest, admin, user
@@ -31,7 +31,7 @@ async def watch_current_product(id_: UUID, box: GuestBox = Depends(guest)):
 
 
 @app.post("/api/EXAMPLE_CRUD/user/new", response_model=GetUserResponse, tags=['EXAMPLE_profile'])
-async def watch_current_product(session: AsyncSession = Depends(system_connection),
+async def watch_current_product(session: AsyncSession = Depends(system_write_conn),
                                 new_user: system_schema.CreateUser = Body(...)):
     await system_table.User.create(session, **new_user.dict())
     return new_user
@@ -47,6 +47,6 @@ async def edit_product(updates_for_user: user_schema.UpdateMyself = Body(...),
 
 @app.delete("/api/EXAMPLE_CRUD/user/delete/me", response_model=OkMessageResponse, tags=['EXAMPLE_profile'])
 async def edit_product(box: UserBox = Depends(user),
-                       session: AsyncSession = Depends(system_connection)):
+                       session: AsyncSession = Depends(system_write_conn)):
     await box.t.User.delete(session, box.u.id)
     return OkMessageResponse()

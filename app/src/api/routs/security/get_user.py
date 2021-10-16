@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from src.utils.security import verify_password
 from src.api.routs.security.config import oauth2_scheme
 from src.api.routs.security.schemes import TokenData
-from src.db.models.connections import system_connection
+from src.db.models.connections import system_readonly_conn
 from src.db.models import system
 from src.db.models.sessions import system_session
 from src.api.exceptions.e_401_not_authorizes import BearerNotAuthorizedError
