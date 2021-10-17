@@ -1,5 +1,5 @@
 from collections import namedtuple
-from typing import NamedTuple, Type
+from typing import NamedTuple, Type, Union
 
 from src.db.models.schemes.as_role._real import DbUser as _real_DbUser
 from src.db.models.schemes.as_role._real import CreateUser as _real_CreateUser
@@ -30,7 +30,8 @@ from src.db.models.schemes.as_role.system import CreateUser as system_CreateUser
 
 __all__ = ['_real', 'guest', 'user', 'admin', 'developer', 'system',
            "TypeRealSchema", "TypeGuestSchema", "TypeUserSchema", "TypeAdminSchema",
-           "TypeDeveloperSchema", "TypeSystemSchema", ]
+           "TypeDeveloperSchema", "TypeSystemSchema",
+           'AllOutUser', 'AllInUser', 'AllDbUser']
 
 
 class TypeRealSchema(NamedTuple):
@@ -54,7 +55,7 @@ class TypeUserSchema(NamedTuple):
 
 
 class TypeAdminSchema(NamedTuple):
-    User: Type[admin_DbUser] = admin_DbUser
+    DbUser: Type[admin_DbUser] = admin_DbUser
     InUser: Type[admin_InUser] = admin_InUser
     OutUser: Type[admin_OutUser] = admin_OutUser
 
@@ -78,3 +79,12 @@ user = TypeUserSchema()
 admin = TypeAdminSchema()
 developer = TypeDeveloperSchema()
 system = TypeSystemSchema()
+
+AllOutUser = Union[_real.OutUser, system.OutUser, developer.OutUser,
+                   admin.OutUser, user.OutUser, guest.OutUser]
+
+AllInUser = Union[_real.InUser, system.InUser, developer.InUser,
+                  admin.InUser, user.InUser, guest.InUser]
+
+AllDbUser = Union[_real.DbUser, system.DbUser, developer.DbUser,
+                  admin.DbUser, user.DbUser, guest.DbUser]
